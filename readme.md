@@ -1,8 +1,16 @@
 # Mysite
 
-* servlet
-* Spring MVC
-* Spring Boot
+* practice
+
+	* servlet
+	* Spring MVC
+	* Spring Boot
+
+* desc
+
+	* Server : Linux
+		* WAS; tomcat
+		* mariaDB
 
 ## 목차
 
@@ -16,7 +24,9 @@
 
 [5. mysite06 (Spring Boot)](#5-mysite06)
 
-## 1. mysite02
+## 1. mysite02 
+
+* [설명](/mysite02)
 
 [확인 : http://192.168.254.40:8080/mysite02/guestbook](http://192.168.254.40:8080/mysite02/guestbook)
 
