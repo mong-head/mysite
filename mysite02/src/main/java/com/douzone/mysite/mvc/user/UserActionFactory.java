@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mvc.Action;
 import com.douzone.mvc.ActionFactory;
-import com.douzone.mvc.main.MainAction;
+import com.douzone.mysite.mvc.main.MainAction;
 
 public class UserActionFactory implements ActionFactory {
 

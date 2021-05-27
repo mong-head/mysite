@@ -1,4 +1,4 @@
-package com.douzone.mvc.main;
+package com.douzone.mysite.mvc.main;
 
 import com.douzone.mvc.Action;
 import com.douzone.mvc.ActionFactory;
