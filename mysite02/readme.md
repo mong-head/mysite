@@ -6,7 +6,7 @@
 	* Dao (Model)
 	* JSP (View)
 	
-	<img src="https://user-images.githubusercontent.com/52481037/119791848-28cf7a80-bf10-11eb-87bd-e312923c28f5.png" width="60%">
+	<img src="https://user-images.githubusercontent.com/52481037/119791848-28cf7a80-bf10-11eb-87bd-e312923c28f5.png" width="30%">
 
 	
 * MVC
@@ -57,8 +57,8 @@
 	
 - 중복된 코드
     - Action 관련
-
-        <img scr="https://user-images.githubusercontent.com/52481037/119794250-53bace00-bf12-11eb-899c-a0565ac4fd91.jpg" width="60%">
+	
+		<img src="https://user-images.githubusercontent.com/52481037/119794250-53bace00-bf12-11eb-899c-a0565ac4fd91.jpg" width="60%">
 
         - MVCUtils
             - Controller마다 util에 해당하는 forwarding, redirecting부분은 반복됨
