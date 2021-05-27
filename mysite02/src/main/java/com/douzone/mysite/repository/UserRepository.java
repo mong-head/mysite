@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.douzone.mysite.vo.GuestbookVo;
+import com.douzone.mysite.vo.UserVo;
 
-public class GuestbookRepository {
+public class UserRepository {
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
@@ -30,7 +30,7 @@ public class GuestbookRepository {
 
 	}
 	
-	public boolean insert(GuestbookVo vo) {
+	public boolean insert(UserVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
@@ -38,13 +38,14 @@ public class GuestbookRepository {
 			conn = getConnection();
 			
 			// 3. prepare Statement 
-			String sql = "insert into guestbook values( null,?,?,?,now())";
+			String sql = "insert into user values(null,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. SQL binging
 			pstmt.setString(1, vo.getName()); // parameter mapping
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getMessage());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getPassword());
+			pstmt.setString(4, vo.getGender());
 			
 			// 5. SQL execute
 			int count = pstmt.executeUpdate();
@@ -70,8 +71,8 @@ public class GuestbookRepository {
 		return result;
 	}
 
-	public List<GuestbookVo> findAll() {
-		List<GuestbookVo> result = new ArrayList<>();
+	public List<UserVo> findAll() {
+		List<UserVo> result = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -98,12 +99,10 @@ public class GuestbookRepository {
 				String reg_date = rs.getString(5);
 				
 				// mapping
-				GuestbookVo vo = new GuestbookVo();
+				UserVo vo = new UserVo();
 				vo.setNo(no);
 				vo.setName(name);
 				vo.setPassword(password);
-				vo.setMessage(message);
-				vo.setRegDate(reg_date);
 				
 				result.add(vo);
 			}
@@ -130,7 +129,7 @@ public class GuestbookRepository {
 		}
 		return result;
 	}
-	public boolean delete(GuestbookVo vo){
+	public boolean delete(UserVo vo){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
@@ -169,7 +168,7 @@ public class GuestbookRepository {
 		}
 		return result;
 	}
-	public String findPassword(GuestbookVo vo) {
+	public String findPassword(UserVo vo) {
 		String result = null;
 		
 		Connection conn = null;
