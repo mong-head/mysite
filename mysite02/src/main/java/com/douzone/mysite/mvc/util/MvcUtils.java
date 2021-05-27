@@ -15,4 +15,9 @@ public class MvcUtils {
 		
 	}
 
+	public static void redirect(String url, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.sendRedirect(url);
+		
+	}
+
 }
