@@ -6,7 +6,7 @@
 
 ## 목차
 
-[1. mysite02 [model 2(Servlet, JSP)](#-1-mysite02)
+[1. mysite02 (model 2(Servlet, JSP))](#-1-mysite02)
 
 [2. mysite03 (Spring MVC, xml 설정)](#-2-mysite03)
 
