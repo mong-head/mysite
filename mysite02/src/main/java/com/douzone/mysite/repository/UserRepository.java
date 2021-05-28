@@ -216,6 +216,7 @@ public class UserRepository {
 		return result;
 	}
 
+	//보안상 위험한 클래스 : password는 select로 받아오면 안됨
 	public UserVo findByEmailAndPassword(String email, String password) {
 		UserVo result = null;
 		
@@ -242,7 +243,7 @@ public class UserRepository {
 				
 				result = new UserVo();
 				result.setNo(no);
-				result.setEmail(name);
+				result.setName(name);
 			}
 			
 		} catch (SQLException e) {
@@ -267,5 +268,10 @@ public class UserRepository {
 		}
 		return result;
 		
+	}
+
+	public UserVo findByNo(Long userNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
