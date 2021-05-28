@@ -4,11 +4,6 @@
     pageEncoding="UTF-8"%>
 <%
 	List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
-	String alert = request.getParameter("alert");
-	if("true".equals(alert)){
-		out.println("<script>alert('비번 틀림!');</script>");
-		out.println("<script>window.location.href=\"http://localhost:8080/mysite02/guestbook\"</script>");
-	}
 %>
 <!DOCTYPE html>
 <html>
