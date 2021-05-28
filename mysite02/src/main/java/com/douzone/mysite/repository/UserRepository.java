@@ -215,4 +215,57 @@ public class UserRepository {
 		}
 		return result;
 	}
+
+	public UserVo findByEmailAndPassword(String email, String password) {
+		UserVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = getConnection();
+			
+			// 3. prepare sql statement
+			String sql = "select no,name from user where email=? and password=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			
+			// 4. SQL실행 
+			rs = pstmt.executeQuery();
+			
+			//결과는 1개이기에 while안쓰고 if씀
+			if(rs.next()) {	
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				
+				result = new UserVo();
+				result.setNo(no);
+				result.setEmail(name);
+			}
+			
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
+			System.out.println("error :"+e);
+		} finally {
+			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();					
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("connection close error:"+e);
+			}
+		}
+		return result;
+		
+	}
 }

@@ -21,6 +21,10 @@ public class UserActionFactory implements ActionFactory {
 			action = new JoinsuccessAction();
 		} else if("join".equals(actionName)){
 			action = new JoinAction();
+		} else if("loginform".equals(actionName)){
+			action = new LoginformAction();
+		} else if("login".equals(actionName)){
+			action = new LoginAction();
 		} else {
 			action = new MainAction();
 		}
