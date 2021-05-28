@@ -9,6 +9,13 @@
   <packaging>war</packaging>
   
   <dependencies>
+  	<!-- jstl -->
+	 <!-- maven jstl dependency검색 -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
   	<!--  MariaDB JDBC Driver -->
 	<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 	<dependency>

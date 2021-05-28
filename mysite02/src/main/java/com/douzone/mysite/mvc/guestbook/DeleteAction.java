@@ -21,15 +21,10 @@ public class DeleteAction implements Action {
 		GuestbookVo vo = new GuestbookVo();
 		vo.setNo(no);
 		vo.setPassword(password);
+	
+		new GuestbookRepository().delete(vo);
+		MvcUtils.redirect(request.getContextPath()+"/guestbook",request,response);
 		
-		String real_password = new GuestbookRepository().findPassword(vo);
-		if(password.equals(real_password)){
-			new GuestbookRepository().delete(vo);
-			MvcUtils.redirect(request.getContextPath()+"/guestbook",request,response);
-		}
-		else{
-			MvcUtils.redirect(request.getContextPath()+"/guestbook?alert=true",request,response);
-		}
 	}
 
 }

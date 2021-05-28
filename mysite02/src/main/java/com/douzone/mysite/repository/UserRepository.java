@@ -271,7 +271,96 @@ public class UserRepository {
 	}
 
 	public UserVo findByNo(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		UserVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = getConnection();
+			
+			// 3. prepare sql statement
+			String sql = "select no,email from user where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, userNo);
+			
+			// 4. SQL실행 
+			rs = pstmt.executeQuery();
+			
+			//결과는 1개이기에 while안쓰고 if씀
+			if(rs.next()) {	
+				Long no = rs.getLong(1);
+				String email = rs.getString(2);
+				
+				result = new UserVo();
+				result.setNo(no);
+				result.setEmail(email);
+			}
+			
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
+			System.out.println("error :"+e);
+		} finally {
+			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();					
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("connection close error:"+e);
+			}
+		}
+		return result;
+	}
+
+	public void update(UserVo vo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = getConnection();
+			
+			// 3. prepare sql statement
+			String sql = "update user set name = ?, password= ? , gender= ? where no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setLong(4, vo.getNo());
+			
+			// 4. SQL실행 
+			rs = pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
+			System.out.println("error :"+e);
+		} finally {
+			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();					
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("connection close error:"+e);
+			}
+		}
 	}
 }
