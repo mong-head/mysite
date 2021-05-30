@@ -35,7 +35,8 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 		boolean result = false;
 		try {
-			conn = getConnection();
+			//conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare Statement 
 			String sql = "insert into user values(null,?,?,?,?)";
@@ -79,7 +80,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select no,name,password,message,reg_date"
@@ -135,7 +136,7 @@ public class UserRepository {
 		boolean result = false;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. Statement 생성 - query 실행위함
 			String sql = "delete from guestbook where no = ? and password = ?";
@@ -176,7 +177,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select password"
@@ -225,7 +226,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select no,name from user where email=? and password=?";
@@ -279,7 +280,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select no,email from user where no=?";
@@ -329,7 +330,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "update user set name = ?, password= ? , gender= ? where no = ?";

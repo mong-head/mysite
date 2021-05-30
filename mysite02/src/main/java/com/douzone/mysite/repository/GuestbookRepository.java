@@ -35,7 +35,7 @@ public class GuestbookRepository {
 		PreparedStatement pstmt = null;
 		boolean result = false;
 		try {
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare Statement 
 			String sql = "insert into guestbook values( null,?,?,?,now())";
@@ -78,7 +78,7 @@ public class GuestbookRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select no,name,password,message,reg_date"
@@ -136,7 +136,7 @@ public class GuestbookRepository {
 		boolean result = false;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. Statement 생성 - query 실행위함
 			String sql = "delete from guestbook where no = ? and password = ?";
@@ -177,7 +177,7 @@ public class GuestbookRepository {
 		ResultSet rs = null;
 		try {
 			// 1,2 : driver loading, connection
-			conn = getConnection();
+			conn = new ForConnection().getConnection();
 			
 			// 3. prepare sql statement
 			String sql = "select password"
