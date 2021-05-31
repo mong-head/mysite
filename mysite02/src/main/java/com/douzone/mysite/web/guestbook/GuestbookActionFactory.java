@@ -1,9 +1,5 @@
 package com.douzone.mysite.web.guestbook;
 
-import com.douzone.mysite.web.main.MainAction;
-import com.douzone.mysite.web.user.JoinAction;
-import com.douzone.mysite.web.user.JoinformAction;
-import com.douzone.mysite.web.user.JoinsuccessAction;
 import com.douzone.web.Action;
 import com.douzone.web.ActionFactory;
 
