@@ -1,11 +1,11 @@
-package com.douzone.mysite.mvc.guestbook;
+package com.douzone.mysite.web.guestbook;
 
-import com.douzone.mvc.Action;
-import com.douzone.mvc.ActionFactory;
-import com.douzone.mysite.mvc.main.MainAction;
-import com.douzone.mysite.mvc.user.JoinAction;
-import com.douzone.mysite.mvc.user.JoinformAction;
-import com.douzone.mysite.mvc.user.JoinsuccessAction;
+import com.douzone.mysite.web.main.MainAction;
+import com.douzone.mysite.web.user.JoinAction;
+import com.douzone.mysite.web.user.JoinformAction;
+import com.douzone.mysite.web.user.JoinsuccessAction;
+import com.douzone.web.Action;
+import com.douzone.web.ActionFactory;
 
 public class GuestbookActionFactory implements ActionFactory{
 

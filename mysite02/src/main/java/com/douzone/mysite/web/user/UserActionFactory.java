@@ -1,4 +1,4 @@
-package com.douzone.mysite.mvc.user;
+package com.douzone.mysite.web.user;
 
 import java.io.IOException;
 
@@ -6,9 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mvc.Action;
-import com.douzone.mvc.ActionFactory;
-import com.douzone.mysite.mvc.main.MainAction;
+import com.douzone.mysite.web.main.MainAction;
+import com.douzone.web.Action;
+import com.douzone.web.ActionFactory;
 
 public class UserActionFactory implements ActionFactory {
 
