@@ -13,8 +13,8 @@ public class ForConnection {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
 			// 2. DriverManager - get connection
-			//String url = "jdbc:mysql://192.168.254.40:3307/webdb?characterEncoding=utf8"; //linux server ip
-			String url = "jdbc:mysql://172.30.1.55:3307/webdb?characterEncoding=utf8"; //linux server ip
+			String url = "jdbc:mysql://192.168.254.40:3307/webdb?characterEncoding=utf8"; //linux server ip
+			//String url = "jdbc:mysql://172.30.1.55:3307/webdb?characterEncoding=utf8"; //linux server ip
 			conn	   = DriverManager.getConnection(url,"webdb","webdb");
 			
 			conn.createStatement();
