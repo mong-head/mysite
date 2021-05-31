@@ -18,6 +18,10 @@ public class BoardActionFactory implements ActionFactory{
 			action = new NewInsertAction();
 		} else if("commentInsert".equals(actionName)) {
 			action = new CommentInsertAction();
+		} else if("modify".equals(actionName)) {
+			action = new ModifyAction();
+		} else if("update".equals(actionName)) {
+			action = new updateAction();
 		} else {
 			action = new ListAction();
 		}

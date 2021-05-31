@@ -64,7 +64,7 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board">글목록</a>
 					<c:if test="${authUser.no == boardVo.userNo  }">
-						<a href="">글수정</a>
+						<a href="${pageContext.request.contextPath }/board?a=modify&no=${boardVo.no }">글수정</a>
 					</c:if>
 				</div>
 			</div>
