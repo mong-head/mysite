@@ -16,12 +16,15 @@ public class UpdateAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
 		long no = Integer.parseInt(request.getParameter("no"));  
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
-		
 		
 		UserVo vo = new UserVo();
 		vo.setNo(no);
@@ -34,10 +37,9 @@ public class UpdateAction implements Action {
 		
 		UserVo userVo= new UserRepository().findByEmailAndPassword(email,password);
 		
-		/*인증처리 (session 처리)*/
-		//System.out.println(userVo); //확인용
-		HttpSession session = request.getSession(true);
-		session.setAttribute("authUser",userVo);
+		authUser.setName(name);
+		authUser.setPassword(password);
+		authUser.setGender(gender);
 		
 		//main으로 redirect
 		MvcUtils.redirect(request.getContextPath(), request, response);
