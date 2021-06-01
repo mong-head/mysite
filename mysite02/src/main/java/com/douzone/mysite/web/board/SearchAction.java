@@ -19,9 +19,6 @@ public class SearchAction implements Action {
 		String looking_for = request.getParameter("looking_for");
 		String kwd = request.getParameter("kwd");
 		
-		System.out.println(looking_for);
-		System.out.println(kwd);
-		
 		List<BoardVo> list = null;
 		if("title_contents".equals(looking_for)) {
 			list = new BoardRepository().findByTitleContents(kwd);

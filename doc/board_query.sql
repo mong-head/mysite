@@ -33,6 +33,6 @@ update board set title = '음' , contents = 'ㅎㅎ' where no = 19;
 select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name
 from board b
 join user u on u.no = b.user_no 
-where u.name = '배유진'
+where u.name like '%배유진%'
 order by group_no desc , order_no asc
 ;

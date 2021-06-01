@@ -40,7 +40,7 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach items="${list }" var="vo" varStatus="status">			
+					<c:forEach items="${list }" var="vo" varStatus="status">	
 					<tr>
 						<td>${fn:length(list) - status.index }</td>
 						<c:choose>
@@ -67,17 +67,25 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<c:choose>
-							<c:when test="${currentPageNo }">
-							</c:when>
-						</c:choose>-
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${pageInfo.firstPageNo != 1}">
+							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo }">◀</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${pageInfo.firstPageNo }" end="${pageInfo.lastPageNo }">
+							<li <c:if test="${i == pageInfo.currentPageNo}" >class="selected"</c:if>>
+								<c:choose>
+									<c:when test="${i > pageInfo.totalPage }">
+										<c:out value="${i }"/>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath }/board?p=${i }"><c:out value="${i }"/></a>
+									</c:otherwise>			
+								</c:choose>					
+							</li>
+						</c:forEach>
+						<c:if test="${pageInfo.lastPageNo < pageInfo.totalPage}">
+							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo }">▶</a></li>
+						</c:if>
+						
 					</ul>
 				</div>					
 				<!-- pager 추가 -->

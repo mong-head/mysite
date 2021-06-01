@@ -1,6 +1,7 @@
 package com.douzone.mysite.web.board;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,29 +17,40 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		계산해야함		
-//		totalPage = ceil(10/3) : 4 page
-//		firstPageNo = 3;
-//		lastPageNo = 7;
-//		nextPageNo = 8;
-//		prevPageNo = 2;
-//		currentPageNo = 4;
+
+		//current page
+		String p = request.getParameter("p");
+		if(p == null) {
+			p = "1";
+		}
+		int currentPageNo = Integer.parseInt(p);
 		
-//		map = new ~~
-//		map.put("lastPageNo", lastPageNo)등등
+		//list
+		List<BoardVo> list = new BoardRepository().findByPage(currentPageNo);
+
+		//page parameters
+		int totalPage = (int) Math.ceil(new BoardRepository().CountArticle()/5f);
+		int firstPageNo = currentPageNo - (currentPageNo-1)%5; 
+		int lastPageNo = firstPageNo + 4;
+		int nextPageNo = lastPageNo + 1;
+		int prevPageNo = firstPageNo -1;
+		if(prevPageNo < 1) {
+			prevPageNo = 1;
+		}
+		if(nextPageNo > totalPage) {
+			nextPageNo = totalPage;
+		}
 		
-//		request.setAttribute("PageInfo",map);
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		map.put("currentPageNo", currentPageNo);
+		map.put("totalPage", totalPage);
+		map.put("firstPageNo", firstPageNo);
+		map.put("lastPageNo", lastPageNo);
+		map.put("nextPageNo", nextPageNo);
+		map.put("prevPageNo", prevPageNo);
 		
-		//int currentPageNo = Integer.parseInt(request.getParameter("currentPageNo"));
-		
-		
-		List<BoardVo> list = new BoardRepository().findAll();
-							
 		request.setAttribute("list",list);
-		
-		int	numList = list.size();
-		int totalPage = (int) Math.ceil(numList/5f);
-		
+		request.setAttribute("pageInfo", map);
 		
 		MvcUtils.forward("board/list", request, response);
 	}
