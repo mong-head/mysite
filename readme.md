@@ -28,7 +28,7 @@
 
 * [설명](/mysite02)
 
-[확인 : http://192.168.254.40:8080/mysite02/guestbook](http://192.168.254.40:8080/mysite02/guestbook)
+[확인 : http://192.168.254.40:8080/mysite02](http://192.168.254.40:8080/mysite02)
 
 ## 2. mysite03
 
