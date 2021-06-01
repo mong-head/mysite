@@ -8,6 +8,14 @@ join user u on u.no = b.user_no
 order by group_no desc , order_no asc
 ;
 
+-- select (find by page)
+select b.no,title,contents,reg_date,hit,group_no,order_no,depth,b.user_no, u.name
+from board b
+join user u on u.no = b.user_no 
+order by group_no desc , order_no asc
+limit 5,5
+;
+
 select * from user;
 select * from board;
 
@@ -36,3 +44,12 @@ join user u on u.no = b.user_no
 where u.name like '%배유진%'
 order by group_no desc , order_no asc
 ;
+
+select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name, count(*)
+from board b
+join user u on u.no = b.user_no 
+where title like '%mong%' or contents like '%mong%' or u.name like '%mong%'
+order by group_no desc , order_no asc
+;
+
+select count(*) from board;

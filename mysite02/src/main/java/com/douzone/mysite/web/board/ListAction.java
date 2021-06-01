@@ -18,18 +18,47 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int size = new BoardRepository().CountArticle();
-		
-		//current page
+		//get parameter
 		String p = request.getParameter("p");
 		if(p == null) {
 			p = "1";
 		}
 		int currentPageNo = Integer.parseInt(p);
+		String looking_for = request.getParameter("looking_for");
+		String kwd = request.getParameter("kwd");
+		
+		int size = 0;
+		
+		if(kwd == null && looking_for == null) {
+			kwd = "";
+			looking_for = "";
+		}
 		
 		//list
-		List<BoardVo> list = new BoardRepository().findByPage(currentPageNo);
-
+		List<BoardVo> list = null;
+		
+		if(kwd != "") {
+			if ("title_contents".equals(looking_for)) {
+				list = new BoardRepository().findByTitleContents(kwd,currentPageNo);
+				size = new BoardRepository().CountTitleContents(kwd);
+			} else if ("title".equals(looking_for)) {
+				list = new BoardRepository().findByTitle(kwd,currentPageNo);
+				size = new BoardRepository().CountTitle(kwd);
+			} else if ("contents".equals(looking_for)) {
+				list = new BoardRepository().findByContents(kwd,currentPageNo);
+				size = new BoardRepository().CountContents(kwd);
+			} else if ("writer".equals(looking_for)) {
+				list = new BoardRepository().findByWriter(kwd,currentPageNo);
+				size = new BoardRepository().CountWriter(kwd);
+			}
+			request.setAttribute("kwd", kwd);
+			request.setAttribute("looking_for", looking_for);
+		}
+		else {
+			list = new BoardRepository().findByPage(currentPageNo);
+			size = new BoardRepository().CountArticle();
+		}
+		
 		//page parameters
 		
 		int totalPage = (int) Math.ceil(size/5f);

@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board?a=search" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="post">
 					<select name="looking_for">
 					    <option value="title_contents" <c:if test="${'title_contents' eq looking_for}">selected</c:if>>제목+내용</option>
 					    <option value="title" <c:if test="${'title' eq looking_for}">selected</c:if>>제목</option>
@@ -68,7 +68,7 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${pageInfo.firstPageNo != 1}">
-							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo }">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo }&kwd=${kwd}&looking_for=${looking_for}">◀</a></li>
 						</c:if>
 						<c:forEach var="i" begin="${pageInfo.firstPageNo }" end="${pageInfo.lastPageNo }">
 							<li <c:if test="${i == pageInfo.currentPageNo}" >class="selected"</c:if>>
@@ -77,13 +77,13 @@
 										<c:out value="${i }"/>
 									</c:when>
 									<c:otherwise>
-										<a href="${pageContext.request.contextPath }/board?p=${i }"><c:out value="${i }"/></a>
+										<a href="${pageContext.request.contextPath }/board?p=${i }&kwd=${kwd}&looking_for=${looking_for}"><c:out value="${i }"/></a>
 									</c:otherwise>			
 								</c:choose>					
 							</li>
 						</c:forEach>
 						<c:if test="${pageInfo.lastPageNo < pageInfo.totalPage}">
-							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo }">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo }&kwd=${kwd}&looking_for=${looking_for}">▶</a></li>
 						</c:if>
 						
 					</ul>

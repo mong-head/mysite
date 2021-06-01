@@ -819,8 +819,210 @@ public class BoardRepository {
 				vo.setDepth(depth);
 				vo.setUserNo(user_no);
 				vo.setUserName(user_name);
+				
 
 				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public int CountTitle(String kwd) {
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select count(*)"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where title like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			if (rs.next() /* 각각의 행 가지고 오기 */) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public int CountTitleContents(String kwd) {
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select count(*)"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where title like ? or contents like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setString(2, "%"+kwd+"%");
+			
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			if (rs.next() /* 각각의 행 가지고 오기 */) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public int CountContents(String kwd) {
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select count(*)"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where contents like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			if (rs.next() /* 각각의 행 가지고 오기 */) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public int CountWriter(String kwd) {
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select count(*)"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where u.name like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			if (rs.next() /* 각각의 행 가지고 오기 */) {
+				result = rs.getInt(1);
 			}
 
 		} catch (SQLException e) {
