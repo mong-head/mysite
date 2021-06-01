@@ -38,7 +38,7 @@ public class BoardRepository {
 			conn = new ForConnection().getConnection();
 
 			// 3. prepare Statement
-			String sql = "insert into board values(null,?,?, now(), ?, ?,?,?,?)"; // 조회수, depth,orderno는 0
+			String sql = "insert into board values(null,?,?, now(), ?, ?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. SQL binging
@@ -419,6 +419,304 @@ public class BoardRepository {
 		}
 		return result;
 
+	}
+
+	public List<BoardVo> findByTitle(String kwd) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where title like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			while (rs.next() /* 각각의 행 가지고 오기 */) {
+				long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				String reg_date = rs.getString(4);
+				int hit = rs.getInt(5);
+				int group_no = rs.getInt(6);
+				int order_no = rs.getInt(7);
+				int depth = rs.getInt(8);
+				int user_no = rs.getInt(9);
+				String user_name = rs.getString(10);
+
+				// mapping
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setRegDate(reg_date);
+				vo.setHit(hit);
+				vo.setGroupNo(group_no);
+				vo.setOrderNo(order_no);
+				vo.setDepth(depth);
+				vo.setUserNo(user_no);
+				vo.setUserName(user_name);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public List<BoardVo> findByTitleContents(String kwd) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where title like ? or contents like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setString(2, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			while (rs.next() /* 각각의 행 가지고 오기 */) {
+				long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				String reg_date = rs.getString(4);
+				int hit = rs.getInt(5);
+				int group_no = rs.getInt(6);
+				int order_no = rs.getInt(7);
+				int depth = rs.getInt(8);
+				int user_no = rs.getInt(9);
+				String user_name = rs.getString(10);
+
+				// mapping
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setRegDate(reg_date);
+				vo.setHit(hit);
+				vo.setGroupNo(group_no);
+				vo.setOrderNo(order_no);
+				vo.setDepth(depth);
+				vo.setUserNo(user_no);
+				vo.setUserName(user_name);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public List<BoardVo> findByContents(String kwd) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where contents like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			while (rs.next() /* 각각의 행 가지고 오기 */) {
+				long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				String reg_date = rs.getString(4);
+				int hit = rs.getInt(5);
+				int group_no = rs.getInt(6);
+				int order_no = rs.getInt(7);
+				int depth = rs.getInt(8);
+				int user_no = rs.getInt(9);
+				String user_name = rs.getString(10);
+
+				// mapping
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setRegDate(reg_date);
+				vo.setHit(hit);
+				vo.setGroupNo(group_no);
+				vo.setOrderNo(order_no);
+				vo.setDepth(depth);
+				vo.setUserNo(user_no);
+				vo.setUserName(user_name);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
+	}
+	public List<BoardVo> findByWriter(String kwd) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// 1,2 : driver loading, connection
+			conn = new ForConnection().getConnection();
+
+			// 3. prepare sql statement + binding
+			String sql = "select b.no,title,contents,reg_date,hit,group_no,order_no,depth, u.no, u.name"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " where u.name like ? "
+					+ " order by group_no desc , order_no asc";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+
+			// 4. execute
+			rs = pstmt.executeQuery();
+
+			// 6. result 가져오기
+			while (rs.next() /* 각각의 행 가지고 오기 */) {
+				long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				String reg_date = rs.getString(4);
+				int hit = rs.getInt(5);
+				int group_no = rs.getInt(6);
+				int order_no = rs.getInt(7);
+				int depth = rs.getInt(8);
+				int user_no = rs.getInt(9);
+				String user_name = rs.getString(10);
+
+				// mapping
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setRegDate(reg_date);
+				vo.setHit(hit);
+				vo.setGroupNo(group_no);
+				vo.setOrderNo(order_no);
+				vo.setDepth(depth);
+				vo.setUserNo(user_no);
+				vo.setUserName(user_name);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때
+			System.out.println("error :" + e);
+		} finally {
+			// clean-up; 자원정리는 만들어진 순서 거꾸로 하기
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("connection close error:" + e);
+			}
+		}
+		return result;
 	}
 
 }

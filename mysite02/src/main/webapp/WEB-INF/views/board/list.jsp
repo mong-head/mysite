@@ -14,8 +14,21 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.request.contextPath }/board?a=search" method="post">
+					<select name="looking_for">
+					    <option value="title_contents" <c:if test="${'title_contents' eq looking_for}">selected</c:if>>제목+내용</option>
+					    <option value="title" <c:if test="${'title' eq looking_for}">selected</c:if>>제목</option>
+					    <option value="contents" <c:if test="${'contents' eq looking_for}">selected</c:if>>내용</option>
+					    <option value="writer" <c:if test="${'writer' eq looking_for}">selected</c:if>>작성자</option>
+					</select>
+					<c:choose>
+						<c:when test="${not empty kwd }">
+							<input type="text" id="kwd" name="kwd" value="${kwd }">
+						</c:when>
+						<c:otherwise>
+							<input type="text" id="kwd" name="kwd" value="">
+						</c:otherwise>
+					</c:choose>
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -41,9 +54,12 @@
 						<td>${vo.userName }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.regDate }</td>
-						<c:if test="${authUser.no == vo.userNo }">
-							<td><a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a></td>
-						</c:if>
+						<td>
+							<c:if test="${authUser.no == vo.userNo }">
+								<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a>
+							</c:if>
+						</td>
+						
 					</tr>
 					</c:forEach>
 				</table>

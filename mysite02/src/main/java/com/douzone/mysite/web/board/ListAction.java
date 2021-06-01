@@ -29,15 +29,16 @@ public class ListAction implements Action {
 		
 //		request.setAttribute("PageInfo",map);
 		
-		// 1 process request
+		//int currentPageNo = Integer.parseInt(request.getParameter("currentPageNo"));
+		
+		
 		List<BoardVo> list = new BoardRepository().findAll();
 							
-		// 2 request 범위에 data 저장
 		request.setAttribute("list",list);
 		
 		int	numList = list.size();
 		int totalPage = (int) Math.ceil(numList/5f);
-		//int currentPageNo = 
+		
 		
 		MvcUtils.forward("board/list", request, response);
 	}

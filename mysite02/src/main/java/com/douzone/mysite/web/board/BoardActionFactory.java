@@ -21,7 +21,9 @@ public class BoardActionFactory implements ActionFactory{
 		} else if("modify".equals(actionName)) {
 			action = new ModifyAction();
 		} else if("update".equals(actionName)) {
-			action = new updateAction();
+			action = new UpdateAction();
+		} else if("search".equals(actionName)) {
+			action = new SearchAction();
 		} else {
 			action = new ListAction();
 		}
