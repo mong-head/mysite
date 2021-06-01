@@ -17,7 +17,9 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		int size = new BoardRepository().CountArticle();
+		
 		//current page
 		String p = request.getParameter("p");
 		if(p == null) {
@@ -29,7 +31,8 @@ public class ListAction implements Action {
 		List<BoardVo> list = new BoardRepository().findByPage(currentPageNo);
 
 		//page parameters
-		int totalPage = (int) Math.ceil(new BoardRepository().CountArticle()/5f);
+		
+		int totalPage = (int) Math.ceil(size/5f);
 		int firstPageNo = currentPageNo - (currentPageNo-1)%5; 
 		int lastPageNo = firstPageNo + 4;
 		int nextPageNo = lastPageNo + 1;
@@ -50,6 +53,7 @@ public class ListAction implements Action {
 		map.put("prevPageNo", prevPageNo);
 		
 		request.setAttribute("list",list);
+		request.setAttribute("size",size);
 		request.setAttribute("pageInfo", map);
 		
 		MvcUtils.forward("board/list", request, response);

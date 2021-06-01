@@ -540,7 +540,7 @@ public class BoardRepository {
 
 	}
 
-	public List<BoardVo> findByTitle(String kwd) {
+	public List<BoardVo> findByTitle(String kwd, int currentPageNo) {
 		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
@@ -555,10 +555,12 @@ public class BoardRepository {
 					+ " from board b"
 					+ " join user u on u.no = b.user_no"
 					+ " where title like ? "
-					+ " order by group_no desc , order_no asc";
+					+ " order by group_no desc , order_no asc"
+					+ " limit ?, 5";
 					
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setInt(2, (currentPageNo-1)*5);
 
 			// 4. execute
 			rs = pstmt.executeQuery();
@@ -614,7 +616,7 @@ public class BoardRepository {
 		}
 		return result;
 	}
-	public List<BoardVo> findByTitleContents(String kwd) {
+	public List<BoardVo> findByTitleContents(String kwd, int currentPageNo) {
 		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
@@ -629,11 +631,13 @@ public class BoardRepository {
 					+ " from board b"
 					+ " join user u on u.no = b.user_no"
 					+ " where title like ? or contents like ? "
-					+ " order by group_no desc , order_no asc";
+					+ " order by group_no desc , order_no asc"
+					+ " limit ?, 5";
 					
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+kwd+"%");
 			pstmt.setString(2, "%"+kwd+"%");
+			pstmt.setInt(3, (currentPageNo-1)*5);
 
 			// 4. execute
 			rs = pstmt.executeQuery();
@@ -689,7 +693,7 @@ public class BoardRepository {
 		}
 		return result;
 	}
-	public List<BoardVo> findByContents(String kwd) {
+	public List<BoardVo> findByContents(String kwd, int currentPageNo) {
 		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
@@ -704,10 +708,12 @@ public class BoardRepository {
 					+ " from board b"
 					+ " join user u on u.no = b.user_no"
 					+ " where contents like ? "
-					+ " order by group_no desc , order_no asc";
+					+ " order by group_no desc , order_no asc"
+					+ " limit ?, 5";
 					
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setInt(2, (currentPageNo-1)*5);
 
 			// 4. execute
 			rs = pstmt.executeQuery();
@@ -763,7 +769,7 @@ public class BoardRepository {
 		}
 		return result;
 	}
-	public List<BoardVo> findByWriter(String kwd) {
+	public List<BoardVo> findByWriter(String kwd, int currentPageNo) {
 		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
@@ -778,10 +784,12 @@ public class BoardRepository {
 					+ " from board b"
 					+ " join user u on u.no = b.user_no"
 					+ " where u.name like ? "
-					+ " order by group_no desc , order_no asc";
+					+ " order by group_no desc , order_no asc"
+					+ " limit ?, 5";
 					
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setInt(2, (currentPageNo-1)*5);
 
 			// 4. execute
 			rs = pstmt.executeQuery();

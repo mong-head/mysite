@@ -42,7 +42,7 @@
 					</tr>
 					<c:forEach items="${list }" var="vo" varStatus="status">	
 					<tr>
-						<td>${fn:length(list) - status.index }</td>
+						<td>${size - status.index - 5*(pageInfo.currentPageNo-1)}</td>
 						<c:choose>
 							<c:when test= "${vo.depth == 0 }">
 								<td style="text-align:left; padding-left:0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
