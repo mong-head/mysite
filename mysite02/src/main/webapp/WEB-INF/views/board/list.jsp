@@ -56,13 +56,14 @@
 						<td>${vo.regDate }</td>
 						<td>
 							<c:if test="${authUser.no == vo.userNo }">
-								<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a>
+								<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}&p=${pageInfo.currentPageNo}&kwd=${kwd}&looking_for=${looking_for}" class="del">삭제</a>
 							</c:if>
 						</td>
 						
 					</tr>
 					</c:forEach>
 				</table>
+						
 				
 				<!-- pager 추가 -->
 				<div class="pager">

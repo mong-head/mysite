@@ -1,6 +1,7 @@
 package com.douzone.mysite.web.board;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,14 +16,19 @@ public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		long no = Integer.parseInt(request.getParameter("no"));  
+		request.setCharacterEncoding("utf-8");
+
+		long no = Integer.parseInt(request.getParameter("no"));
+		String currentPageNo = request.getParameter("p");
+		String kwd =  URLEncoder.encode(request.getParameter("kwd"),"UTF-8"); 
+		String looking_for = request.getParameter("looking_for");
 		
 		BoardVo vo = new BoardVo();
 		vo.setNo(no);
 		
 		new BoardRepository().delete(vo);
 		
-		MvcUtils.redirect(request.getContextPath()+"/board", request, response);
+		MvcUtils.redirect(request.getContextPath()+"/board?p=" + currentPageNo + "&kwd=" + kwd + "&looking_for=" + looking_for , request, response);
 	}
 
 }
