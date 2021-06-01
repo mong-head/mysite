@@ -42,13 +42,13 @@
 					</tr>
 					<c:forEach items="${list }" var="vo" varStatus="status">			
 					<tr>
-						<td>${status.count }</td>
+						<td>${fn:length(list) - status.index }</td>
 						<c:choose>
 							<c:when test= "${vo.depth == 0 }">
 								<td style="text-align:left; padding-left:0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
 							</c:when>
 							<c:otherwise>
-								<td style="text-align:left; padding-left:${(vo.depth-1)*20 }px"><img src="assets/images/reply.png"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
+								<td style="text-align:left; padding-left:${(vo.depth)*15 }px"><img src="assets/images/reply.png"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
 							</c:otherwise>
 						</c:choose>
 						<td>${vo.userName }</td>
