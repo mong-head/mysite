@@ -31,10 +31,10 @@ com.douzone.mysite.vo
 			* ContextLoadListner 만들어지면 listener라서 ContextInitialize()가 실행되면서 application.xml참고하여 Root Application Context만듦
 	* spring-servlet.xml
 		* scanning : Controller 경로 설정		
-		* defaultServlet로 갈 수 있도록 설정
+		* defaultServletHandler 설정
 			* defaultServlet : 정적 자원 처리
 				* DispatcherServlet의 경로가 "/" : 모든 request가 이 servlet으로 가기에 defaultServlet으로 요청이 가지 않음
-				* css등이 처리 되게 하기 위해서는 
+				* css등이 처리 되게 하기 위해서는 defaultServlet으로 갈 수 있도록 HandlerMapping내에 defaultServletHandler 설정 해야함
 			* defaultServlet 그림 넣기
 		
  		

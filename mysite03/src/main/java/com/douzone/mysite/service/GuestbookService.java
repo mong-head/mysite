@@ -19,11 +19,16 @@ public class GuestbookService {
 	}
 	
 	public boolean deleteMessage(Long no, String password) {
+		
+		
 		return true;
 	}
 	
 	public boolean addMessage(GuestbookVo vo) {
-		return true;
+		if(guestbookRepository.insert(vo)) {
+			return true;
+		}
+		return false;
 	}
 	
 }
