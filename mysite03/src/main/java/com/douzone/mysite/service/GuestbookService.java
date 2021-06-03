@@ -23,7 +23,7 @@ public class GuestbookService {
 		vo.setNo(no);
 		vo.setPassword(password);
 		guestbookRepository.delete(vo);
-;		
+	
 		return true;
 	}
 	

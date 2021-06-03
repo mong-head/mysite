@@ -75,64 +75,6 @@ public class UserRepository {
 		return result;
 	}
 
-	public List<UserVo> findAll() {
-		List<UserVo> result = new ArrayList<>();
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			// 1,2 : driver loading, connection
-			conn = new ForConnection().getConnection();
-			
-			// 3. prepare sql statement
-			String sql = "select no,name,password,message,reg_date"
-					+ " from guestbook"
-					+ " order by no desc";
-			pstmt = conn.prepareStatement(sql);
-			
-			// 4. SQL실행 ( no binding )
-			rs = pstmt.executeQuery();
-			
-			// 6. result 가져오기
-			while(rs.next() /*각각의 행 가지고 오기*/) {
-				long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String password = rs.getString(3);
-				String message = rs.getString(4);
-				String reg_date = rs.getString(5);
-				
-				// mapping
-				UserVo vo = new UserVo();
-				vo.setNo(no);
-				vo.setName(name);
-				vo.setPassword(password);
-				
-				result.add(vo);
-			}
-			
-		} catch (SQLException e) {
-			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
-			System.out.println("error :"+e);
-		} finally {
-			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();					
-				}
-				
-			} catch (SQLException e) {
-				System.out.println("connection close error:"+e);
-			}
-		}
-		return result;
-	}
 	public boolean delete(UserVo vo){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
