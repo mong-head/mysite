@@ -4,7 +4,7 @@
 	<select id="findAll" resultType="guestbookvo">
 		<!-- CDATA : "<" or ">" 를 tag로 보게 하지 않기 위해 사용 -->
 		<![CDATA[
-			select no,name,password,message,reg_date
+			select no,name,password,message,reg_date as regDate
 			from guestbook
 			order by no desc
 		]]>
