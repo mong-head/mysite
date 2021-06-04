@@ -46,5 +46,6 @@ com.douzone.mysite.vo
 			* defaultServlet 그림 넣기
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
- 		
+ 	* mappers xml
+		* guestbook.xml : guestbook query 와 object(Guestbook
 	
