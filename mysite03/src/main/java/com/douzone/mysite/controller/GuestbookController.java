@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,5 +46,14 @@ public class GuestbookController {
 	public String delete(@PathVariable("no") Long no, @RequestParam(value="password", required=true, defaultValue="") String password) {
 		guestbookService.deleteMessage(no, password);
 		return "redirect:/guestbook";
+	}
+	
+	//AOP
+	@ExceptionHandler(Exception.class) // Exception.class: 모든 예외가 발생시
+	public String handlerException() {
+		// 1. logging
+
+		// 2. 사과
+		return "error/exception"; // WEB-INF/views/error/exception.jsp 에서 사과 화면띄우도록
 	}
 }

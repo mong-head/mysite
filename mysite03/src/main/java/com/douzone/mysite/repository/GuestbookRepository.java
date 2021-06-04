@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestbookRepositoryException;
 import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
@@ -55,7 +56,7 @@ public class GuestbookRepository {
 			
 		} catch (SQLException e) {
 			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
-			System.out.println("error :"+e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
 			try {
@@ -113,7 +114,8 @@ public class GuestbookRepository {
 			
 		} catch (SQLException e) {
 			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
-			System.out.println("error :"+e);
+			//System.out.println("error :"+e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
 			try {
@@ -155,7 +157,7 @@ public class GuestbookRepository {
 			
 		} catch (SQLException e) {
 			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
-			System.out.println("error :"+e);
+			new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
 			try {
@@ -199,7 +201,7 @@ public class GuestbookRepository {
 			
 		} catch (SQLException e) {
 			// 2. 관련 : linux 꺼져있을 때 등등 connection안될 때 
-			System.out.println("error :"+e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			//clean-up; 자원정리는 만들어진 순서 거꾸로 하기
 			try {
