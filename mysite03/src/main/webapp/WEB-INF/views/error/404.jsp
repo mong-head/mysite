@@ -10,10 +10,10 @@
 </head>
 <body>
 
-	<h1>Exception occurs</h1>
-	<pre style='color:red'>
-		${exception }
-	</pre>
+	<h1>Not Found(404) - Oooops</h1>
+	<p>
+		죄송. 요청하신 페이지 찾을 수 없음
+	</p>
 	
 </body>
 </html>

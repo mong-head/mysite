@@ -10,10 +10,11 @@
 </head>
 <body>
 
-	<h1>Exception occurs</h1>
-	<pre style='color:red'>
-		${exception }
-	</pre>
+	<h1>예기치 않은 오류 (Internal Server Error 500)</h1>
+	<p>
+		죄송. 오류가 발생함 <br/>
+		잠시후, 다시 시도해보시기 바람
+	</p>
 	
 </body>
 </html>

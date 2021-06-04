@@ -48,12 +48,12 @@ public class GuestbookController {
 		return "redirect:/guestbook";
 	}
 	
-	//AOP
-	@ExceptionHandler(Exception.class) // Exception.class: 모든 예외가 발생시
-	public String handlerException() {
-		// 1. logging
-
-		// 2. 사과
-		return "error/exception"; // WEB-INF/views/error/exception.jsp 에서 사과 화면띄우도록
-	}
+//	//AOP
+//	@ExceptionHandler(Exception.class) // Exception.class: 모든 예외가 발생시
+//	public String handlerException() {
+//		// 1. logging
+//
+//		// 2. 사과
+//		return "error/exception"; // WEB-INF/views/error/exception.jsp 에서 사과 화면띄우도록
+//	}
 }
