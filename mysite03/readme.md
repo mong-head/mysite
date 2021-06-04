@@ -13,9 +13,13 @@ com.douzone.mysite.vo
 * 설정
 	* pom.xml
 		* spring web mvc, context, mvc
+		* spring jdbc : MyBatis db 연결 설정 관련
+		* common dncp (DataSource - connection pool) : MyBatis db 연결 관련
+		* MyBatis
 		* jstl
 		* mariadb
 		* build 설정
+		
 	* web.xml
 		* applicationContext.xml (root application context) 설정
 			* listener에서 사용할 Context Parameter설정
@@ -30,6 +34,9 @@ com.douzone.mysite.vo
 				* Servlet --(사용)--> Service --(사용)--> Repository
 		* 이 xml을 사용해서 Root Application Context만듦
 			* ContextLoadListner 만들어지면 listener라서 ContextInitialize()가 실행되면서 application.xml참고하여 Root Application Context만듦
+		* MyBatis 설정 : SqlSessionFactory만들기 위해 db 연결 설정
+			* Bean 설정
+			* SqlSessionFactoryTemplate
 	* spring-servlet.xml
 		* scanning : Controller 경로 설정, Exception 경로 설정
 		* defaultServletHandler 설정
@@ -37,6 +44,7 @@ com.douzone.mysite.vo
 				* DispatcherServlet의 경로가 "/" : 모든 request가 이 servlet으로 가기에 defaultServlet으로 요청이 가지 않음
 				* css등이 처리 되게 하기 위해서는 defaultServlet으로 갈 수 있도록 HandlerMapping내에 defaultServletHandler 설정 해야함
 			* defaultServlet 그림 넣기
-		
+	* configuation.xml (resources내에 위치)
+		* MyBatis 설정 : mapper file loading 설정
  		
 	
