@@ -44,6 +44,9 @@ com.douzone.mysite.vo
 				* DispatcherServlet의 경로가 "/" : 모든 request가 이 servlet으로 가기에 defaultServlet으로 요청이 가지 않음
 				* css등이 처리 되게 하기 위해서는 defaultServlet으로 갈 수 있도록 HandlerMapping내에 defaultServletHandler 설정 해야함
 			* defaultServlet 그림 넣기
+		* Sercurity 관련 설정
+			* argument-resolver 등록 (AuthUserHandlerMethodArgumentResolver)
+			* interceptor 설정
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
  	* mappers xml

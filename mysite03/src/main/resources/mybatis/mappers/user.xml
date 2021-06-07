@@ -3,15 +3,15 @@
 <mapper namespace="user">
 	
 	<insert id="insert" parameterType="uservo">
-		<![CDATA[ insert into user values(null,#{name },#{email },#{password },#{gender }) ]]>
+		<![CDATA[ insert into user values(null,#{name },#{email },#{password },#{gender }, 'USER') ]]>
 	</insert>
 	
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
-		<![CDATA[ select no,name from user where email= #{email } and password= #{password }]]>
+		<![CDATA[ select no,name,role from user where email= #{email } and password= #{password }]]>
 	</select>
 	
 	<select id="findByNo" parameterType="long" resultType="uservo">
-		<![CDATA[ select no,email,name,gender from user where no=#{no }]]>
+		<![CDATA[ select no,email,name,gender,role from user where no=#{no }]]>
 	</select>
 	
 	<update id="update" parameterType="uservo">
