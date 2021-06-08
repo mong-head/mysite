@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site">
+
+	<select id="findAll" parameterType="map" resultType="sitevo">
+		<![CDATA[ select title,welcome,image,description from site]]>
+	</select>
+	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[ update site set title = #{title }, welcome= #{welcome } , image= #{image }, description = #{description }]]>
+	</update>
+
+</mapper>

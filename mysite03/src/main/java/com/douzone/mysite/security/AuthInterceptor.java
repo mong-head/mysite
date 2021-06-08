@@ -53,7 +53,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		String role = auth.role();
 		String authRole = authUser.getRole();
 		
-		if(authRole.equals(role)) {
+		if(role.equals(authRole) || "ADMIN".equals(authRole)) {
 			//admin 페이지로 넘기기
 			return true;
 		} else {

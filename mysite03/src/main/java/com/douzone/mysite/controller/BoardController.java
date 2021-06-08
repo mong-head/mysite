@@ -17,7 +17,6 @@ import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 
-@Auth // login해야 들어올 수 있음
 @Controller
 @RequestMapping("/board")
 public class BoardController extends HttpServlet {
