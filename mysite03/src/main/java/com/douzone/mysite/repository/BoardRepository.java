@@ -60,7 +60,7 @@ public class BoardRepository {
 		Map<String,Object> map = new HashMap<>();
 		map.put("kwd", kwd);
 		map.put("looking_for", looking_for);
-		return sqlSession.selectOne("board.countTitle",map);
+		return sqlSession.selectOne("board.countArticle",map);
 	}
 	
 	public int findMaxGroupNo() {

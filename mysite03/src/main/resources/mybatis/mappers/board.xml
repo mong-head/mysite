@@ -144,7 +144,7 @@
 					from board b
 					join user u on u.no = b.user_no
 					order by group_no desc , order_no asc
-					limit #{currenPageNo }, 5
+					limit #{currentPageNo }, 5
 				]]>
 			</otherwise>
 		</choose>
