@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[ insert into board values(null,#{title },#{contents }, now(), #{hit }, #{groupNo },#{orderNo },#{depth },#{userNo }) ]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[ 
+				select last_insert_id()
+			]]>
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterType="boardvo">
+		<![CDATA[ delete from board where no = #{no }]]>
+	</delete>
+
+	<update id="update" parameterType="boardvo">
+		<![CDATA[ update board set title = #{title } , contents = #{contents } where no = #{no }]]>
+	</update>
+
+	<update id="updateHit" parameterType="boardvo">
+		<![CDATA[ update board set hit = #{hit } where no = #{no }]]>
+	</update>
+
+	<update id="updateOrderNo" parameterType="boardvo">
+		<![CDATA[ update board set order_no = #{orderNo } where no = #{no }]]>
+	</update>
+
+	<select id="findAll" resultType="boardvo">
+		<!-- CDATA : "<" or ">" 를 tag로 보게 하지 않기 위해 사용 -->
+		<![CDATA[
+			select b.no as no ,title,contents,reg_date,hit,group_no,order_no,depth,b.user_no as userNo, u.name as userName
+			from board b
+			join user u on u.no = b.user_no
+			order by group_no desc , order_no asc
+		]]>
+	</select>
+
+	<select id="findByNo" parameterType="long" resultType="boardvo">
+		<![CDATA[
+			select title,contents,hit, group_no as groupNo ,order_no as orderNo ,depth ,user_no as userNo ,reg_date as regDate
+			from board where no = #{no }
+		]]>
+	</select>
+
+	<select id="findMaxGroupNo" resultType="int">
+		<![CDATA[
+			select max(group_no) from board
+		]]>
+	</select>
+
+	<select id="countArticle" parameterType="map" resultType="int">
+		<choose>
+			<when test='looking_for eq "title"'>
+				<![CDATA[
+					select count(*)
+					from board b
+					join user u on u.no = b.user_no
+					where title like '%${kwd }%'
+					order by group_no desc , order_no asc
+				]]>
+			</when>
+			<when test='looking_for eq "title_contents"'>
+				<![CDATA[
+					select count(*)
+					from board b
+					join user u on u.no = b.user_no
+					where title like '%${kwd }%' or contents like '%${kwd }%'
+					order by group_no desc , order_no asc
+				]]>
+			</when>
+			<when test='looking_for eq "contents"'>
+				<![CDATA[
+					select count(*)
+					from board b
+					join user u on u.no = b.user_no
+					where contents like '%${kwd }%'
+					order by group_no desc , order_no asc
+				]]>
+			</when>
+			<when test='looking_for eq "writer"'>
+				<![CDATA[
+					select count(*)
+					from board b
+					join user u on u.no = b.user_no
+					where u.name like '%${kwd }%'
+					order by group_no desc , order_no asc
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select count(*) from board
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findByPage" parameterType="map" resultType="boardvo">
+		<choose>
+			<when test='looking_for eq "title_contents"'>
+				<![CDATA[
+					select b.no as no ,title,contents,reg_date as regDate ,hit,group_no as groupNo ,order_no as orderNo ,depth, u.no as userNo, u.name as userName
+					from board b
+					join user u on u.no = b.user_no
+					where title like '%${kwd }%' or contents like '%${kwd }%'
+					order by group_no desc , order_no asc
+					limit #{currentPageNo }, 5
+				]]>
+			</when>
+			<when test='looking_for eq "title"'>
+				<![CDATA[
+					select b.no as no ,title,contents,reg_date as regDate,hit,group_no as groupNo ,order_no as orderNo ,depth, u.no as userNo, u.name as userName
+					from board b
+					join user u on u.no = b.user_no
+					where title like '%${kwd }%'
+					order by group_no desc , order_no asc
+					limit #{currentPageNo }, 5
+				]]>
+			</when>
+			<when test='looking_for eq "contents"'>
+				<![CDATA[
+					select b.no as no ,title,contents,reg_date as regDate,hit,group_no as groupNo ,order_no as orderNo ,depth, u.no as userNo, u.name as userName
+					from board b
+					join user u on u.no = b.user_no
+					where contents like '%${kwd }%'
+					order by group_no desc , order_no asc
+					limit #{currentPageNo }, 5
+				]]>
+			</when>
+			<when test='looking_for eq "writer"'>
+				<![CDATA[
+					select b.no as no ,title,contents,reg_date as regDate,hit,group_no as groupNo ,order_no as orderNo ,depth, u.no as userNo, u.name as userName
+					from board b
+					join user u on u.no = b.user_no
+					where u.name like '%${kwd }%'
+					order by group_no desc , order_no asc
+					limit #{currentPageNo }, 5
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select b.no as no ,title,contents,reg_date as regDate,hit,group_no as groupNo ,order_no as orderNo ,depth,b.user_no as userNo, u.name as userName
+					from board b
+					join user u on u.no = b.user_no
+					order by group_no desc , order_no asc
+					limit #{currenPageNo }, 5
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>
