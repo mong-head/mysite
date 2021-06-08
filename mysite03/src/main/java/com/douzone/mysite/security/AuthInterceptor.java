@@ -26,12 +26,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		/* 3. Handler Method의 @Auth정보 받아오기 */
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 		
-		/* 4. Handler Method의 @Auth 없는 경우 */
+		/* 4. Handler Method의 @Auth 없는 경우 Type에 붙어 있는 지 확인*/
+		if(auth == null) {
+			//auth = handlerMethod.type
+		}
+		
+		/* 5. Type과 Method 모두 @Auth 없는 경우*/
 		if(auth == null) {
 			return true;
 		}
 		
-		/* 5. 인증(authentication) 여부 확인 */
+		/* 6. 인증(authentication) 여부 확인 */
 		HttpSession session = request.getSession();
 		if(session == null) {
 			response.sendRedirect(request.getContextPath()+"/user/login");
@@ -44,6 +49,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		
+		/* 7. 권한(Authorization) 체크 위해 @Auth의 role("ADMIN" or "USER") 가지고 오기 */
+		String role = auth.role();
+		String authRole = authUser.getRole();
+		
+		if(authRole.equals(role)) {
+			//admin 페이지로 넘기기ㅣ
+		}
 		return true;
 	}
 

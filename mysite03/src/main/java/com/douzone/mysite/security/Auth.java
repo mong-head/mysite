@@ -12,5 +12,4 @@ public @interface Auth {
 	//public String value() default "";
 	public String role() default "USER"; //의미를 명확히 하기 위해 value대신 role사용
 	public boolean test() default false;
-	
 }
