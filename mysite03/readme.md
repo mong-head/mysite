@@ -13,6 +13,10 @@ com.douzone.mysite.vo
 * 설정
 	* pom.xml
 		* spring web mvc, context, mvc
+			* spring-context
+				* common-logging 제외 (JCL 제외) : LogBack 사용 위함
+		* LogBack
+			*SLF4J 구현체
 		* spring jdbc : MyBatis db 연결 설정 관련
 		* common dncp (DataSource - connection pool) : MyBatis db 연결 관련
 		* MyBatis
