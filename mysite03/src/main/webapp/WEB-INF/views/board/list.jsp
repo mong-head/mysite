@@ -45,10 +45,10 @@
 						<td>${size - status.index - 5*(pageInfo.currentPageNo-1)}</td>
 						<c:choose>
 							<c:when test= "${vo.depth == 0 }">
-								<td style="text-align:left; padding-left:0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
+								<td style="text-align:left; padding-left:0px"><a href="${pageContext.request.contextPath }/board/view?no=${vo.no }">${vo.title }</a></td>
 							</c:when>
 							<c:otherwise>
-								<td style="text-align:left; padding-left:${(vo.depth)*15 }px"><img src="assets/images/reply.png"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
+								<td style="text-align:left; padding-left:${(vo.depth)*15 }px"><img src="assets/images/reply.png"><a href="${pageContext.request.contextPath }/board/view?no=${vo.no }">${vo.title }</a></td>
 							</c:otherwise>
 						</c:choose>
 						<td>${vo.userName }</td>
@@ -56,7 +56,7 @@
 						<td>${vo.regDate }</td>
 						<td>
 							<c:if test="${authUser.no == vo.userNo }">
-								<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no}&p=${pageInfo.currentPageNo}&kwd=${kwd}&looking_for=${looking_for}" style='background-image':url("assets/images/recycle.png") class="del">삭제</a>
+								<a href="${pageContext.request.contextPath }/board/delete?no=${vo.no}&p=${pageInfo.currentPageNo}&kwd=${kwd}&looking_for=${looking_for}" style='background-image:url("${pageContext.request.contextPath }/assets/images/recycle.png")' class="del">삭제</a>
 							</c:if>
 						</td>
 						

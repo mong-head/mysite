@@ -84,7 +84,7 @@
 					select count(*)
 					from board b
 					join user u on u.no = b.user_no
-					where u.name like '%${kwd }%'
+					where u.name like '%${kwd }%' 
 					order by group_no desc , order_no asc
 				]]>
 			</when>
