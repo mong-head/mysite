@@ -23,6 +23,7 @@ com.douzone.mysite.vo
 		* jstl
 		* mariadb
 		* build 설정
+		* aspect 설정
 		
 	* web.xml
 		* applicationContext.xml (root application context) 설정
@@ -33,7 +34,7 @@ com.douzone.mysite.vo
 			* 이 filter는 spring-web에서 제공해줌
 		* 404, 500 error page 설정
 	* applicationContext.xml
-		* scanning : Repository, Service 경로 설정
+		* scanning : Repository, Service, Aspect 경로 설정
 			* spring의 3단 구성 (servlet, service, repository ) annotation 설정
 				* Servlet --(사용)--> Service --(사용)--> Repository
 		* 이 xml을 사용해서 Root Application Context만듦
@@ -41,6 +42,8 @@ com.douzone.mysite.vo
 		* MyBatis 설정 : SqlSessionFactory만들기 위해 db 연결 설정
 			* Bean 설정
 			* SqlSessionFactoryTemplate
+		* auto proxy 설정 (aspect관련)
+			* servlet설정에서도 하는 것이 좋음
 	* spring-servlet.xml
 		* scanning : Controller 경로 설정, Exception 경로 설정
 		* defaultServletHandler 설정
@@ -51,6 +54,7 @@ com.douzone.mysite.vo
 		* Sercurity 관련 설정
 			* argument-resolver 등록 (AuthUserHandlerMethodArgumentResolver)
 			* interceptor 설정
+		* auto proxy 설정 (aspect관련)
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
  	* mappers xml
