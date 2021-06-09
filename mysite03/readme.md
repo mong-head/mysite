@@ -23,7 +23,8 @@ com.douzone.mysite.vo
 		* jstl
 		* mariadb
 		* build 설정
-		* aspect 설정
+		* aspect 설정 : advisor관련
+		* common fileUpload 설정 : 파일 업로드 관련
 		
 	* web.xml
 		* applicationContext.xml (root application context) 설정
@@ -55,6 +56,9 @@ com.douzone.mysite.vo
 			* argument-resolver 등록 (AuthUserHandlerMethodArgumentResolver)
 			* interceptor 설정
 		* auto proxy 설정 (aspect관련)
+		* file upload 설정
+			* file upload mapping 관련 설정
+			* Multipart Resolver 설정
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
  	* mappers xml

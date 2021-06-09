@@ -81,6 +81,18 @@
 			<version>1.2.0</version>
 		</dependency>
 
+		<!-- Common FileUpload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 		<!-- jstl -->
 		<!-- maven jstl dependency검색 -->
 		<dependency>
