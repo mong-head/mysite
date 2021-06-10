@@ -34,9 +34,15 @@ public class UserRepository {
 	public UserVo findByNo(Long userNo) {
 		return sqlSession.selectOne("user.findByNo",userNo);
 	}
+	
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail",email);
+	}
 
 	public boolean update(UserVo vo) {
 		int count = sqlSession.update("user.update",vo);
 		return count == 1;
 	}
+
+	
 }

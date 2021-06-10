@@ -10,6 +10,10 @@
 		<![CDATA[ select no,name,role from user where email= #{email } and password= #{password }]]>
 	</select>
 	
+	<select id="findByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[ select no from user where email= #{email }]]>
+	</select>
+	
 	<select id="findByNo" parameterType="long" resultType="uservo">
 		<![CDATA[ select no,email,name,gender,role from user where no=#{no }]]>
 	</select>
