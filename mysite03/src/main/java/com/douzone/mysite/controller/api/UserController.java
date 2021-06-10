@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.douzone.mysite.dto.JsonResult;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -24,15 +24,16 @@ public class UserController {
 	//@ResponseBody
 	//@RequestMapping("/checkemail",method=RequestMethod.GET)
 	@GetMapping(value="/checkemail") //restful coding
-	public Object checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
+	public JsonResult checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
 		
 		UserVo userVo = userService.getUser(email);
 		
-		Map<String,Object> map = new HashMap<>();
-		map.put("result", "success"); //통신 결과 return
-		map.put("exist", userVo != null);
+		// 이렇게 만들게 되면 사람마다 데이터형식 다 다르게 할 수 있음
+//		Map<String,Object> map = new HashMap<>();
+//		map.put("result", "success"); //통신 결과 return
+//		map.put("exist", userVo != null);
 		
-		return map;
+		return JsonResult.success(userVo);
 	}
 	
 }
