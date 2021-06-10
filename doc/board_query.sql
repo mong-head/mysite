@@ -26,7 +26,7 @@ insert into board values(null,"점심먹자!", "점심 뭐 먹을까?", now(), 0
 insert into board values(null,"라면?", "라면이 좋을 것 같아 ㅎㅎ", now(), 0, 1,1,1,2);
 
 -- find max group no
-select max(group_no) from board;
+select if(max(group_no) is null,'0',max(group_no)+1)from board;
 
 -- find by no
 select title,contents from board where user_no = 1;
@@ -53,3 +53,9 @@ order by group_no desc , order_no asc
 ;
 
 select count(*) from board;
+
+select * from board;
+select * from board  where order_no > 2 and group_no = 1;
+
+-- update order no
+update board set order_no = order_no + 1 where order_no > 2 and group_no = 1;
