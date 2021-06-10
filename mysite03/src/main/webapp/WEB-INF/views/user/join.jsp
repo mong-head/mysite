@@ -61,8 +61,11 @@
 				type : "get",
 				dataType : "json",
 				success : function(response){
+					console.log(response);
+					
 					if(response.result != "success"){
 						console.error(response.message);
+						return;
 					}
 					
 					if(response.data){
