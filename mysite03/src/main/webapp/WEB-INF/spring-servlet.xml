@@ -12,6 +12,8 @@
 
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
+	
+	<aop:config proxy-target-class="true"></aop:config>
 
 	<!-- Multipart Resolver -->
 	<bean id="multipartResolver"

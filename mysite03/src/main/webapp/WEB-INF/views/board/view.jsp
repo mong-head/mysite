@@ -36,8 +36,7 @@
 					</tr>
 				</table>
 				<c:if test="${not empty authUser }">
-					<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type = "hidden" name = "a" value="commentInsert">
+					<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write">
 					<input type = "hidden" name = "no" value="${boardVo.no }">
 
 					<table class="tbl-ex">
@@ -51,7 +50,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
@@ -64,7 +63,7 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board">글목록</a>
 					<c:if test="${authUser.no == boardVo.userNo  }">
-						<a href="${pageContext.request.contextPath }/board?a=modify&no=${boardVo.no }">글수정</a>
+						<a href="${pageContext.request.contextPath }/board/update?no=${boardVo.no }">글수정</a>
 					</c:if>
 				</div>
 			</div>

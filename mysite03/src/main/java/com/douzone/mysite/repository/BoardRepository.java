@@ -38,8 +38,8 @@ public class BoardRepository {
 		return count == 1;
 	}
 
-	public boolean updateOrderNo(BoardVo vo) {
-		int count = sqlSession.update("board.updateOrderNo", vo);
+	public boolean updateOrderNo(BoardVo currentVo ) {
+		int count = sqlSession.update("board.updateOrderNo", currentVo);
 		return count == 1;
 	}
 
@@ -61,10 +61,6 @@ public class BoardRepository {
 		map.put("kwd", kwd);
 		map.put("looking_for", looking_for);
 		return sqlSession.selectOne("board.countArticle",map);
-	}
-	
-	public int findMaxGroupNo() {
-		return sqlSession.selectOne("board.findMaxGroupNo");
 	}
 
 	public BoardVo findByNo(long no) {

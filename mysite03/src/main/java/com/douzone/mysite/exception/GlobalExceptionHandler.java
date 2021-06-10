@@ -18,10 +18,7 @@ public class GlobalExceptionHandler {
 	public String handlerException(Model model, Exception e) {
 		//1. logging
 		StringWriter errors = new StringWriter(); 
-		//e.printStackTrace(new PrintWriter(errors)); //error stack 내용 자세히 출력(어디서 error발생한 것인지)
-		LOGGER.debug(errors.toString());
-		LOGGER.info(errors.toString());
-		LOGGER.warn(errors.toString());
+		e.printStackTrace(new PrintWriter(errors)); //error stack 내용 자세히 출력(어디서 error발생한 것인지)
 		LOGGER.error(errors.toString());
 		
 		//2. apologize page

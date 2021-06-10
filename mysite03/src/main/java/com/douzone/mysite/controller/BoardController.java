@@ -1,6 +1,5 @@
 package com.douzone.mysite.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.UserVo;
 
-@Auth
+//@Auth
 @Controller
 @RequestMapping("/board")
 public class BoardController extends HttpServlet {
@@ -64,6 +64,41 @@ public class BoardController extends HttpServlet {
 		model.addAttribute("p",currentPageNo);
 		model.addAttribute("kwd",kwd);
 		model.addAttribute("looking_for",looking_for);
+		return "redirect:/board";
+	}
+	
+	@Auth
+	@RequestMapping("/write")
+	public String write() {
+		return "board/write";
+	}
+	
+	@Auth
+	@RequestMapping(value="/write", method=RequestMethod.POST)
+	public String write(
+			@AuthUser UserVo authUser,
+			@RequestParam(value="no",required=false) Long no,
+			BoardVo boardVo) {
+		
+		boardVo.setUserNo(authUser.getNo());
+		boardService.write(no, boardVo);
+		
+		return "redirect:/board";
+	}
+	
+	@Auth
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String update(@RequestParam(value="no",required=false) Long no, Model model) {
+		BoardVo boardVo = boardService.getArticle(no);
+		model.addAttribute("no", no);
+		model.addAttribute("boardVo",boardVo);
+		return "board/modify";
+	}
+	
+	@Auth
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update(@RequestParam(value="no",required=false) Long no,BoardVo boardVo) {
+		boardService.update(boardVo);
 		return "redirect:/board";
 	}
 	

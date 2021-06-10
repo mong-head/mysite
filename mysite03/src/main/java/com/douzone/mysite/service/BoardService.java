@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.UserVo;
 
 @Service
 public class BoardService {
@@ -62,6 +65,24 @@ public class BoardService {
 		BoardVo vo = new BoardVo();
 		vo.setNo(no);
 		return boardRepository.delete(vo);
+	}
+
+	public void write(Long no, BoardVo boardVo) {
+
+		if(no == null) {
+			boardRepository.Insert(boardVo);
+		} else {
+			BoardVo currentVo = boardRepository.findByNo(no);
+			boardRepository.updateOrderNo(currentVo);
+			boardVo.setGroupNo(currentVo.getGroupNo());
+			boardVo.setOrderNo(currentVo.getOrderNo()+1);
+			boardVo.setDepth(currentVo.getDepth()+1);
+			boardRepository.Insert(boardVo);
+		}
+	}
+
+	public void update(BoardVo boardVo) {
+		boardRepository.update(boardVo);
 	}
 
 }

@@ -7,7 +7,14 @@
 	</select>
 	
 	<update id="update" parameterType="sitevo">
-		<![CDATA[ update site set title = #{title }, welcome= #{welcome } , image= #{image }, description = #{description }]]>
+		<choose>
+			<when test="image == null">
+				<![CDATA[ update site set title = #{title }, welcome= #{welcome } , description = #{description }]]>
+			</when>
+			<otherwise>
+				<![CDATA[ update site set title = #{title }, welcome= #{welcome } , image= #{image }, description = #{description }]]>
+			</otherwise>
+		</choose>
 	</update>
 
 </mapper>
