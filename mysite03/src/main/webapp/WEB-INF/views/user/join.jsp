@@ -39,6 +39,9 @@
 				url : "/mysite03/msg2",
 				type : "get",
 				dataType : "json",
+				error: function(xhr,status,e){
+					console.error(status,e);
+				},
 				success : function(response){
 					console.log(response);
 				}
@@ -59,11 +62,10 @@
 				dataType : "json",
 				success : function(response){
 					if(response.result != "success"){
-						console.log("error");
-						return;
+						console.error(response.message);
 					}
 					
-					if(response.exist){
+					if(response.data){
 						alert("존재하는 이메일입니다. 다른 이메일 사용하세요.");
 						$("#email").val("");
 						$("#email").focus();
