@@ -25,6 +25,7 @@ com.douzone.mysite.vo
 		* build 설정
 		* aspect 설정 : advisor관련
 		* common fileUpload 설정 : 파일 업로드 관련
+		* jackson library추가 : json message converter사용위함
 		
 	* web.xml
 		* applicationContext.xml (root application context) 설정
@@ -59,6 +60,9 @@ com.douzone.mysite.vo
 		* file upload 설정
 			* file upload mapping 관련 설정
 			* Multipart Resolver 설정
+		* message converter 설정
+			* Simple Http Message Converter : utf-8 설정 ; 한글 string 되도록 설정
+			* Jackson Http Message Converter : json 보낼 수 있도록 bean 설정
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
  	* mappers xml

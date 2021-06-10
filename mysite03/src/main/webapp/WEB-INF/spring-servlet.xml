@@ -12,7 +12,7 @@
 
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
-	
+
 	<aop:config proxy-target-class="true"></aop:config>
 
 	<!-- Multipart Resolver -->
@@ -28,6 +28,26 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- StringHttpMessageConverter bean설정 : utf-8 (한글도) -->
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<!-- MappingJacksonHttpMessageConverter : string외 other type인 json 설정-->
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
 		<mvc:argument-resolvers>
 			<bean
 				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
