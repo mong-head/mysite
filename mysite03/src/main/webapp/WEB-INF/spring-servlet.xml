@@ -38,7 +38,7 @@
 					</list>
 				</property>
 			</bean>
-			<!-- MappingJacksonHttpMessageConverter : string외 other type인 json 설정-->
+			<!-- MappingJacksonHttpMessageConverter : string외 other type인 json 설정 -->
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -78,6 +78,17 @@
 	<!-- file upload mapping -->
 	<mvc:resources location="file:/upload-mysite/"
 		mapping="/images/**" />
+
+	<!-- 6. MessageSource : validation 시 defaultmessage아닌 custom message 사용 위해 사용-->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value> <!-- 한국어 version -->
+			</list>
+		</property>
+	</bean>
+
 
 	<!-- ViewResolver 설정 -->
 	<bean id="viewResolver"

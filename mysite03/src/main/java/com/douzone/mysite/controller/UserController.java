@@ -1,16 +1,18 @@
 package com.douzone.mysite.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.security.AuthUser;
-import com.douzone.mysite.service.SiteService;
 import com.douzone.mysite.service.UserService;
-import com.douzone.mysite.vo.SiteVo;
 import com.douzone.mysite.vo.UserVo;
 
 //@Auth
@@ -23,13 +25,23 @@ public class UserController {
 	
 	// joinform
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
 
 	// join
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(UserVo vo) {
+	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			// error message 출력
+//			List<ObjectError> list = result.getAllErrors();
+//			for(ObjectError error : list) {
+//				System.out.println(error);
+//			}
+			model.addAttribute(result.getModel());
+			return "user/join";
+		}
+		//userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 

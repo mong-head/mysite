@@ -26,6 +26,9 @@ com.douzone.mysite.vo
 		* aspect 설정 : advisor관련
 		* common fileUpload 설정 : 파일 업로드 관련
 		* jackson library추가 : json message converter사용위함
+		* validation 설정
+			* validation-api
+			* hibernate제공 validator 사용 : 표준은 아니지만, 거의 표준
 		
 	* web.xml
 		* applicationContext.xml (root application context) 설정
@@ -63,8 +66,13 @@ com.douzone.mysite.vo
 		* message converter 설정
 			* Simple Http Message Converter : utf-8 설정 ; 한글 string 되도록 설정
 			* Jackson Http Message Converter : json 보낼 수 있도록 bean 설정
+		* validation custom message 설정
+			* 다국어 설정도 가능, message_ko.properties관련
 	* configuation.xml (resources내에 위치)
 		* MyBatis 설정 : mapper file loading 설정
  	* mappers xml
-		* guestbook.xml : guestbook query 와 object(Guestbook
-	
+		* guestbook.xml : guestbook query 와 object(GuestbookVo) 연결
+	* messages_ko.properties
+		* validation 실패시 한국어 커스텀 메세지 설정
+			* user-join(회원가입)시 name,password,email의 validation check후 실패시 메세지 보내기 위함
+			
