@@ -4,21 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.UserVo;
 
 @Service
 public class BoardService {
 
 	@Autowired
 	private BoardRepository boardRepository;
-
+	
 	public Map<String, Object> getMessageList(int currentPageNo, String looking_for, String kwd) {
 
 		List<BoardVo> list = boardRepository.findByPage(kwd, looking_for, (currentPageNo - 1) * 5);
@@ -67,6 +65,7 @@ public class BoardService {
 		return boardRepository.delete(vo);
 	}
 
+	@Transactional //댓글 달기에서 transaction 존재
 	public void write(Long no, BoardVo boardVo) {
 
 		if(no == null) {
