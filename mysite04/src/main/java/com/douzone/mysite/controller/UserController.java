@@ -120,4 +120,14 @@ public class UserController {
 
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/auth", method=RequestMethod.POST)
+	public void auth() {
+		// mapping 때문에 설정해놓은 코드
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout() {
+		// mapping 떄문에 설정해놓은 코드
+	}
 }

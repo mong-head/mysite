@@ -3,8 +3,6 @@ package com.douzone.mysite.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,7 @@ import com.douzone.mysite.vo.UserVo;
 //@Auth
 @Controller
 @RequestMapping("/board")
-public class BoardController extends HttpServlet {
+public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
