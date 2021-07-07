@@ -141,6 +141,11 @@
 													+ "</li>";
 
 											$("#list-guestbook").prepend(html);
+											
+											// 내용 지우기
+											$("#input-name").val("");
+											$("#input-password").val("");
+											$("#tx-content").val("");
 										}
 									});
 						});
@@ -164,7 +169,7 @@
 			buttons: {
 				"삭제": function(){
 					const no = $("#hidden-no").val();
-					const password = $("#hidden-delete").val();
+					const password = $("#password-delete").val();
 					$.ajax({
 						url : "${pageContext.request.contextPath }/guestbook/api/delete/"+no,
 						dataType : "json", // 받을 때 format
@@ -188,7 +193,9 @@
 			},
 			close: function(){
 				// 1. password 비우기
+				$("#password-delete").val("");
 				// 2. no 비우기
+				$("#hidden-no").val("");
 				// 3. error message 숨기기
 				console.log("dialog form data 정리작업")
 			}
@@ -222,8 +229,10 @@
 				<p class="validateTips error" style="display: none">비밀번호가 틀립니다.</p>
 				<form>
 					<input type="password" id="password-delete" value=""
-						class="text ui-widget-content ui-corner-all"> <input
-						type="hidden" id="hidden-no" value=""> <input
+						class="text ui-widget-content ui-corner-all">
+					<input
+						type="hidden" id="hidden-no" value=""> 
+					<input
 						type="submit" tabindex="-1"
 						style="position: absolute; top: -1000px">
 				</form>

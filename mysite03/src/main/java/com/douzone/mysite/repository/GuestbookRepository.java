@@ -35,7 +35,7 @@ public class GuestbookRepository {
 	}
 	
 	public boolean delete(GuestbookVo vo){
-		int count = sqlSession.insert("guestbook.delete",vo);
+		int count = sqlSession.delete("guestbook.delete",vo);
 		return count == 1;
 	}
 }

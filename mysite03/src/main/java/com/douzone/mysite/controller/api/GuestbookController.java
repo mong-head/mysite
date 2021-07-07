@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douzone.mysite.dto.JsonResult;
@@ -37,17 +38,18 @@ public class GuestbookController {
 	
 	@ResponseBody
 	@RequestMapping("/delete/{no}")
-	public JsonResult ex3(@PathVariable("no") Long no, String password) {
+	public JsonResult ex3(@PathVariable("no") Long no,  @RequestParam(value="password", required=true, defaultValue="") String password) {
 		// delete 작업 (GuestbookService)
 		Long data = null;
-		if(! guestbookService.deleteMessage(no, password)) {
+		boolean result = guestbookService.deleteMessage(no, password);
+		if(!result) {
 			// 1. delete 안 됨
+			System.out.println("false");
 			data = -1L;
-		} 
-		
-		// 2. delete 됨
-		data = no;
-		
+		} else {
+			// 2. delete 됨
+			data = no;
+		}
 		return JsonResult.success(data);
 	}
 }
