@@ -56,4 +56,9 @@ public class GuestbookController {
 //		// 2. 사과
 //		return "error/exception"; // WEB-INF/views/error/exception.jsp 에서 사과 화면띄우도록
 //	}
+	
+	@RequestMapping("/spa")
+	public String spaLanding() {
+		return "guestbook/spa-landing";
+	}
 }

@@ -10,6 +10,21 @@
 		]]>
 	</select>
 	
+	<select id="findAllByNo" parameterType="long" resultType="guestbookvo">
+		<!-- CDATA : "<" or ">" 를 tag로 보게 하지 않기 위해 사용 -->
+		<![CDATA[
+			select no,name,password,message,reg_date as regDate
+			from guestbook
+		]]>
+		<if test='_parameter != 0'>
+			<![CDATA[ where no < #{_parameter }]]>
+		</if>
+		<![CDATA[
+			order by no desc
+			limit 0,3
+		]]>
+	</select>
+	
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[ insert into guestbook values( null, #{name },#{password },#{message },now()) ]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
