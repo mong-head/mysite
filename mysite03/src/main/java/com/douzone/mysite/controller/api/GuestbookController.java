@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,8 +22,17 @@ public class GuestbookController {
 	
 	@ResponseBody
 	@RequestMapping("/list/{no}")
-	public JsonResult ex1(@PathVariable Long no) {
+	public JsonResult list(@PathVariable Long no) {
 		List<GuestbookVo> list = guestbookService.getMessageList(no);
 		return JsonResult.success(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/add")
+	public JsonResult add(@RequestBody GuestbookVo vo) {
+		guestbookService.addMessage(vo);
+		System.out.println(vo);
+		vo.setPassword(""); // 비번은 없애기
+		return JsonResult.success(vo);
 	}
 }

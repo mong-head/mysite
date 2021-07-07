@@ -38,39 +38,113 @@
 		 - password 틀린 경우(삭제실패 : no = 0) 사용자에게 알려주는 UI 처리
 		 - 삭제 성공시( no > 0 ), data-no = 10(예제로 10번) 인 li element 삭제  
 		 - 렌더링 참고 : /ch08/test/gb/ex3
-	*/
-	var fetch = function(){
+	 */
+	var fetch = function() {
 		var no = $("#list-guestbook li:last").data("no");
-		if(no == null){
+		if (no == null) {
 			no = 0;
 		}
-		console.log('no:',no);
+		console.log('no:', no);
 		$.ajax({
-			url : "${pageContext.request.contextPath }/guestbook/api/list/"+no,
+			url : "${pageContext.request.contextPath }/guestbook/api/list/"
+					+ no,
 			dataType : "json", // 받을 때 format
 			type : "get", // 요청 method
 			success : function(response) {
 				console.log(response);
-				response.data.forEach(function(vo){
-					html = 
-							"<li data-no='"+ vo.no +"'><strong>"+ vo.name + "</strong>" +
-								"<p>" + vo.message + "</p>" +
-								"<strong></strong>" +
-								"<a href='' data-no='"+ vo.no + "'>삭제</a>"+
-							"</li>";
-							
+				response.data.forEach(function(vo) {
+					html = "<li data-no='"+ vo.no +"'><strong>" + vo.name
+							+ "</strong>" + "<p>" + vo.message + "</p>"
+							+ "<strong></strong>"
+							+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
+							+ "</li>";
+
 					$("#list-guestbook").append(html);
 				});
 			}
 		});
 	}
-	
+
+	var messageBox = function(type, message) {
+
+		if (type == 'error') {
+			$("#dialog-message p").text(message);
+			$("#dialog-message").dialog({
+				modal : true,
+				buttons : {
+					"확인" : function() {
+						// 확인 버튼 누르면 callback
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+	}
+
 	$(function() {
 		$("#btn-fetch").click(function() {
 			fetch();
 		});
-	
-		
+
+		$("#add-form")
+				.submit(
+						function(event) {
+							event.preventDefault(); // 막기
+
+							vo = {}
+							// validation
+							if ($("#input-name").val() == "") {
+								//alert("이름이 비어있습니다.");
+								// alert창 -> dialog 대체
+								messageBox("error", "이름이 비어있습니다.");
+								return;
+							}
+
+							if ($("#input-password").val() == "") {
+								//alert("이름이 비어있습니다.");
+								// alert창 -> dialog 대체
+								messageBox("error", "비밀번호가 비어있습니다.");
+								return;
+							}
+
+							if ($("#tx-content").val() == "") {
+								//alert("이름이 비어있습니다.");
+								// alert창 -> dialog 대체
+								messageBox("error", "메세지가 비어있습니다.");
+								return;
+							}
+
+							vo.name = $("#input-name").val();
+
+							vo.password = $("#input-password").val();
+
+							vo.message = $("#tx-content").val();
+
+							// data 등록
+							$.ajax({
+										url : "${pageContext.request.contextPath }/guestbook/api/add",
+										dataType : "json", // 받을 때 format
+										type : "post", // 요청 method
+										contentType : "application/json",
+										data : JSON.stringify(vo),
+										success : function(response) {
+											// rendering code
+											var vo = response.data;
+											html = "<li data-no='"+ vo.no +"'><strong>"
+													+ vo.name
+													+ "</strong>"
+													+ "<p>"
+													+ vo.message
+													+ "</p>"
+													+ "<strong></strong>"
+													+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
+													+ "</li>";
+
+											$("#list-guestbook").prepend(html);
+										}
+									});
+						});
+
 		// 최초 데이터 가지고오기
 		fetch();
 	});
