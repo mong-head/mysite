@@ -52,6 +52,9 @@
 			type : "get", // 요청 method
 			success : function(response) {
 				console.log(response);
+				if(response.data.length == 0){
+					$("#btn-fetch").hide();
+				}
 				response.data.forEach(function(vo) {
 					html = "<li data-no='"+ vo.no +"'><strong>" + vo.name
 							+ "</strong>" + "<p>" + vo.message + "</p>"
