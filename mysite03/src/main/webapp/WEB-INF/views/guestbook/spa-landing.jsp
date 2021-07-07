@@ -57,7 +57,7 @@
 				}
 				response.data.forEach(function(vo) {
 					html = "<li data-no='"+ vo.no +"'><strong>" + vo.name
-							+ "</strong>" + "<p>" + vo.message + "</p>"
+							+ "<p>" + vo.message.replaceAll("\n","<br/>") + "</p>"
 							+ "<strong></strong>"
 							+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
 							+ "</li>";
@@ -104,23 +104,17 @@
 							}
 
 							if ($("#input-password").val() == "") {
-								//alert("이름이 비어있습니다.");
-								// alert창 -> dialog 대체
 								messageBox("error", "비밀번호가 비어있습니다.");
 								return;
 							}
 
 							if ($("#tx-content").val() == "") {
-								//alert("이름이 비어있습니다.");
-								// alert창 -> dialog 대체
 								messageBox("error", "메세지가 비어있습니다.");
 								return;
 							}
 
 							vo.name = $("#input-name").val();
-
 							vo.password = $("#input-password").val();
-
 							vo.message = $("#tx-content").val();
 
 							// data 등록
@@ -136,9 +130,7 @@
 											html = "<li data-no='"+ vo.no +"'><strong>"
 													+ vo.name
 													+ "</strong>"
-													+ "<p>"
-													+ vo.message
-													+ "</p>"
+													+ "<p>" + vo.message.replaceAll("\n","<br/>") + "</p>"
 													+ "<strong></strong>"
 													+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
 													+ "</li>";
