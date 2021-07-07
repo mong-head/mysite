@@ -197,7 +197,8 @@
 				// 2. no 비우기
 				$("#hidden-no").val("");
 				// 3. error message 숨기기
-				console.log("dialog form data 정리작업")
+				$(".validateTips.error").hide();
+				//console.log("dialog form data 정리작업")
 			}
 		})
 		
