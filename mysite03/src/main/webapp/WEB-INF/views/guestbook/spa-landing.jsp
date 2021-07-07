@@ -144,7 +144,56 @@
 										}
 									});
 						});
+		
+		// live event : 존재하지 않는 element의 event handler를 미리 등록
+		// delegation (위임) : document에게 위임시킬거임
+		$(document).on("click", "#list-guestbook li a", function() {
+			event.preventDefault();
+			let no = $(this).data("no");
+			$("#hidden-no").val(no);
+			
+			deleteDialog.dialog("open");
+		})
 
+		// delete dialog
+		const deleteDialog = $("#dialog-delete-form").dialog({
+			autoOpen: false, // 바로 자동으로 뜨지 마라
+			width: 300,
+			height: 220,
+			modal: true,		// 뒤에 클릭되지 않게
+			buttons: {
+				"삭제": function(){
+					const no = $("#hidden-no").val();
+					const password = $("#hidden-delete").val();
+					$.ajax({
+						url : "${pageContext.request.contextPath }/guestbook/api/delete/"+no,
+						dataType : "json", // 받을 때 format
+						type : "post", // 요청 method
+						data : "password=" + password,
+						success : function(response) {
+									if(response.data == -1){
+										// password 틀린 경우
+										$(".validateTips.error").show();
+										return;
+									} 
+									
+									$("#list-guestbook li[data-no=" + response.data + "]").remove();
+									deleteDialog.dialog("close");
+								}
+					 });
+				},
+				"취소": function(){
+					$(this).dialog("close");
+				}
+			},
+			close: function(){
+				// 1. password 비우기
+				// 2. no 비우기
+				// 3. error message 숨기기
+				console.log("dialog form data 정리작업")
+			}
+		})
+		
 		// 최초 데이터 가지고오기
 		fetch();
 	});

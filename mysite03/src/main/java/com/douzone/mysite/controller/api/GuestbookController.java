@@ -31,8 +31,23 @@ public class GuestbookController {
 	@RequestMapping("/add")
 	public JsonResult add(@RequestBody GuestbookVo vo) {
 		guestbookService.addMessage(vo);
-		System.out.println(vo);
 		vo.setPassword(""); // 비번은 없애기
 		return JsonResult.success(vo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/delete/{no}")
+	public JsonResult ex3(@PathVariable("no") Long no, String password) {
+		// delete 작업 (GuestbookService)
+		Long data = null;
+		if(! guestbookService.deleteMessage(no, password)) {
+			// 1. delete 안 됨
+			data = -1L;
+		} 
+		
+		// 2. delete 됨
+		data = no;
+		
+		return JsonResult.success(data);
 	}
 }
