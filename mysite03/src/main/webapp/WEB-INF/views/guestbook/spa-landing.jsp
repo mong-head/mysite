@@ -50,10 +50,8 @@
 		url : "${pageContext.request.contextPath }/ejs/list-template.ejs"
 	})
 	var fetch = function() {
-		var no = $("#list-guestbook li:last").data("no");
-		if (no == null) {
-			no = 0;
-		}
+		var no = $("#list-guestbook li:last").data("no") || 0;
+
 		console.log('no:', no);
 		$.ajax({
 			url : "${pageContext.request.contextPath }/guestbook/api/" + no,
