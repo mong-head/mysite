@@ -59,7 +59,8 @@
 			type : "get", // 요청 method
 			success : function(response) {
 				if (response.data.length == 0) {
-					$("#btn-fetch").hide();
+					$("#btn-fetch").prop("disabled",true);
+					isEnd = false;
 				}
 				var html = listEJS.render(response);
 				$("#list-guestbook").append(html);
@@ -67,7 +68,7 @@
 		});
 	}
 
-	var messageBox = function(type, message) {
+	var messageBox = function(type, message, callback) {
 
 		if (type == 'error') {
 			$("#dialog-message p").text(message);
@@ -78,12 +79,26 @@
 						// 확인 버튼 누르면 callback
 						$(this).dialog("close");
 					}
-				}
+				},
+				close : callback
 			});
 		}
 	}
 
 	$(function() {
+		isEnd = true;
+		
+		// scroll 끝났을 떄
+		if(!isEnd){
+			return;
+		}
+		
+		// fetch button
+		$("#btn-fetch").click(function() {
+			fetch();
+		});
+		
+		// scroll event
 		$(window).scroll(function() {
 			var $window = $(this);
 
@@ -105,17 +120,17 @@
 			if ($("#input-name").val() == "") {
 				//alert("이름이 비어있습니다.");
 				// alert창 -> dialog 대체
-				messageBox("error", "이름이 비어있습니다.");
+				messageBox("error", "이름이 비어있습니다.",$("#input-name").focus());
 				return;
 			}
 
 			if ($("#input-password").val() == "") {
-				messageBox("error", "비밀번호가 비어있습니다.");
+				messageBox("error", "비밀번호가 비어있습니다.",$("#input-password").focus());
 				return;
 			}
 
 			if ($("#tx-content").val() == "") {
-				messageBox("error", "메세지가 비어있습니다.");
+				messageBox("error", "메세지가 비어있습니다.",$("#tx-content").focus());
 				return;
 			}
 
@@ -135,10 +150,11 @@
 					html = listItemEJS.render(response.data);
 					$("#list-guestbook").prepend(html);
 
-					// 내용 지우기
-					$("#input-name").val("");
+					// 내용 지우기 ( form reset )
+					/* $("#input-name").val("");
 					$("#input-password").val("");
-					$("#tx-content").val("");
+					$("#tx-content").val(""); */
+					$("#add-form")[0].reset();
 				}
 			});
 		});
@@ -223,11 +239,13 @@
 					<textarea id="tx-content" placeholder="내용을 입력해 주세요."></textarea>
 					<input type="submit" value="보내기" />
 				</form>
-				<ul id="list-guestbook">
-				</ul>
+				<br/>
 				<div>
 					<button id="btn-fetch">fetch</button>
 				</div>
+				<ul id="list-guestbook">
+				</ul>
+				
 			</div>
 			<div id="dialog-delete-form" title="메세지 삭제" style="display: none">
 				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
@@ -240,7 +258,7 @@
 						style="position: absolute; top: -1000px">
 				</form>
 			</div>
-			<div id="dialog-message" title="" style="display: none">
+			<div id="dialog-message" title="알림" style="display: none">
 				<p></p>
 			</div>
 		</div>
