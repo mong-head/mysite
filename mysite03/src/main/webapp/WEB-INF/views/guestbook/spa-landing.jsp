@@ -46,7 +46,7 @@
 		}
 		console.log('no:', no);
 		$.ajax({
-			url : "${pageContext.request.contextPath }/guestbook/api/list/"
+			url : "${pageContext.request.contextPath }/guestbook/api/"
 					+ no,
 			dataType : "json", // 받을 때 format
 			type : "get", // 요청 method
@@ -119,7 +119,7 @@
 
 							// data 등록
 							$.ajax({
-										url : "${pageContext.request.contextPath }/guestbook/api/add",
+										url : "${pageContext.request.contextPath }/guestbook/api",
 										dataType : "json", // 받을 때 format
 										type : "post", // 요청 method
 										contentType : "application/json",
@@ -166,9 +166,9 @@
 					const no = $("#hidden-no").val();
 					const password = $("#password-delete").val();
 					$.ajax({
-						url : "${pageContext.request.contextPath }/guestbook/api/delete/"+no,
+						url : "${pageContext.request.contextPath }/guestbook/api/"+no,
 						dataType : "json", // 받을 때 format
-						type : "post", // 요청 method
+						type : "delete", // 요청 method
 						data : "password=" + password,
 						success : function(response) {
 									if(response.data == -1){
