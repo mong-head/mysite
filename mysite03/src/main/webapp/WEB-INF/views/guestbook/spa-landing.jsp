@@ -15,6 +15,9 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath }/ejs/ejs.js"
+	type="text/javascript"></script>
+
 <script>
 	/** guestbook application based on jQuery */
 	/*
@@ -39,6 +42,13 @@
 		 - 삭제 성공시( no > 0 ), data-no = 10(예제로 10번) 인 li element 삭제  
 		 - 렌더링 참고 : /ch08/test/gb/ex3
 	 */
+
+	var listItemEJS = new EJS({
+		url : "${pageContext.request.contextPath }/ejs/listitem-template.ejs"
+	})
+	var listEJS = new EJS({
+		url : "${pageContext.request.contextPath }/ejs/list-template.ejs"
+	})
 	var fetch = function() {
 		var no = $("#list-guestbook li:last").data("no");
 		if (no == null) {
@@ -46,24 +56,15 @@
 		}
 		console.log('no:', no);
 		$.ajax({
-			url : "${pageContext.request.contextPath }/guestbook/api/"
-					+ no,
+			url : "${pageContext.request.contextPath }/guestbook/api/" + no,
 			dataType : "json", // 받을 때 format
 			type : "get", // 요청 method
 			success : function(response) {
-				console.log(response);
-				if(response.data.length == 0){
+				if (response.data.length == 0) {
 					$("#btn-fetch").hide();
 				}
-				response.data.forEach(function(vo) {
-					html = "<li data-no='"+ vo.no +"'><strong>" + vo.name
-							+ "<p>" + vo.message.replaceAll("\n","<br/>") + "</p>"
-							+ "<strong></strong>"
-							+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
-							+ "</li>";
-
-					$("#list-guestbook").append(html);
-				});
+				var html = listEJS.render(response);
+				$("#list-guestbook").append(html);
 			}
 		});
 	}
@@ -85,118 +86,128 @@
 	}
 
 	$(function() {
-		$(document).scroll(function() {
-			fetch();
+		$(window).scroll(function() {
+			var $window = $(this);
+
+			var windowHeight = $window.height(); // window 크기는 사용자가 매번 바꿀 수 있으므로 항상 높이 구하도록 함
+			var scrollTop = $window.scrollTop();
+			var documentHeight = $(document).height();
+
+			if (scrollTop + windowHeight + 10 > documentHeight) {
+				fetch();
+				//console.log('fetch')
+			}
 		});
 
-		$("#add-form")
-				.submit(
-						function(event) {
-							event.preventDefault(); // 막기
+		$("#add-form").submit(function(event) {
+			event.preventDefault(); // 막기
 
-							vo = {}
-							// validation
-							if ($("#input-name").val() == "") {
-								//alert("이름이 비어있습니다.");
-								// alert창 -> dialog 대체
-								messageBox("error", "이름이 비어있습니다.");
-								return;
-							}
+			vo = {}
+			// validation
+			if ($("#input-name").val() == "") {
+				//alert("이름이 비어있습니다.");
+				// alert창 -> dialog 대체
+				messageBox("error", "이름이 비어있습니다.");
+				return;
+			}
 
-							if ($("#input-password").val() == "") {
-								messageBox("error", "비밀번호가 비어있습니다.");
-								return;
-							}
+			if ($("#input-password").val() == "") {
+				messageBox("error", "비밀번호가 비어있습니다.");
+				return;
+			}
 
-							if ($("#tx-content").val() == "") {
-								messageBox("error", "메세지가 비어있습니다.");
-								return;
-							}
+			if ($("#tx-content").val() == "") {
+				messageBox("error", "메세지가 비어있습니다.");
+				return;
+			}
 
-							vo.name = $("#input-name").val();
-							vo.password = $("#input-password").val();
-							vo.message = $("#tx-content").val();
+			vo.name = $("#input-name").val();
+			vo.password = $("#input-password").val();
+			vo.message = $("#tx-content").val();
 
-							// data 등록
-							$.ajax({
-										url : "${pageContext.request.contextPath }/guestbook/api",
-										dataType : "json", // 받을 때 format
-										type : "post", // 요청 method
-										contentType : "application/json",
-										data : JSON.stringify(vo),
-										success : function(response) {
-											// rendering code
-											var vo = response.data;
-											html = "<li data-no='"+ vo.no +"'><strong>"
-													+ vo.name
-													+ "</strong>"
-													+ "<p>" + vo.message.replaceAll("\n","<br/>") + "</p>"
-													+ "<strong></strong>"
-													+ "<a href='' data-no='"+ vo.no + "'>삭제</a>"
-													+ "</li>";
+			// data 등록
+			$.ajax({
+				url : "${pageContext.request.contextPath }/guestbook/api",
+				dataType : "json", // 받을 때 format
+				type : "post", // 요청 method
+				contentType : "application/json",
+				data : JSON.stringify(vo),
+				success : function(response) {
+					// rendering code
+					html = listItemEJS.render(response.data);
+					$("#list-guestbook").prepend(html);
 
-											$("#list-guestbook").prepend(html);
-											
-											// 내용 지우기
-											$("#input-name").val("");
-											$("#input-password").val("");
-											$("#tx-content").val("");
-										}
-									});
-						});
-		
+					// 내용 지우기
+					$("#input-name").val("");
+					$("#input-password").val("");
+					$("#tx-content").val("");
+				}
+			});
+		});
+
 		// live event : 존재하지 않는 element의 event handler를 미리 등록
 		// delegation (위임) : document에게 위임시킬거임
 		$(document).on("click", "#list-guestbook li a", function() {
 			event.preventDefault();
 			let no = $(this).data("no");
 			$("#hidden-no").val(no);
-			
+
 			deleteDialog.dialog("open");
 		})
 
 		// delete dialog
-		const deleteDialog = $("#dialog-delete-form").dialog({
-			autoOpen: false, // 바로 자동으로 뜨지 마라
-			width: 300,
-			height: 220,
-			modal: true,		// 뒤에 클릭되지 않게
-			buttons: {
-				"삭제": function(){
-					const no = $("#hidden-no").val();
-					const password = $("#password-delete").val();
-					$.ajax({
-						url : "${pageContext.request.contextPath }/guestbook/api/"+no,
-						dataType : "json", // 받을 때 format
-						type : "delete", // 요청 method
-						data : "password=" + password,
-						success : function(response) {
-									if(response.data == -1){
-										// password 틀린 경우
-										$(".validateTips.error").show();
-										return;
-									} 
-									
-									$("#list-guestbook li[data-no=" + response.data + "]").remove();
-									deleteDialog.dialog("close");
+		const deleteDialog = $("#dialog-delete-form")
+				.dialog(
+						{
+							autoOpen : false, // 바로 자동으로 뜨지 마라
+							width : 300,
+							height : 220,
+							modal : true, // 뒤에 클릭되지 않게
+							buttons : {
+								"삭제" : function() {
+									const no = $("#hidden-no").val();
+									const password = $("#password-delete")
+											.val();
+									$
+											.ajax({
+												url : "${pageContext.request.contextPath }/guestbook/api/"
+														+ no,
+												dataType : "json", // 받을 때 format
+												type : "delete", // 요청 method
+												data : "password=" + password,
+												success : function(response) {
+													if (response.data == -1) {
+														// password 틀린 경우
+														$(".validateTips.error")
+																.show();
+														return;
+													}
+
+													$(
+															"#list-guestbook li[data-no="
+																	+ response.data
+																	+ "]")
+															.remove();
+													deleteDialog
+															.dialog("close");
+												}
+											});
+								},
+								"취소" : function() {
+									$(this).dialog("close");
 								}
-					 });
-				},
-				"취소": function(){
-					$(this).dialog("close");
-				}
-			},
-			close: function(){
-				// 1. password 비우기
-				$("#password-delete").val("");
-				// 2. no 비우기
-				$("#hidden-no").val("");
-				// 3. error message 숨기기
-				$(".validateTips.error").hide();
-				//console.log("dialog form data 정리작업")
-			}
-		})
-		
+							},
+							close : function() {
+								// 1. password 비우기
+								$("#password-delete").val("");
+								// 2. no 비우기
+								$("#hidden-no").val("");
+								// 3. error message 숨기기
+								$(".validateTips.error").hide();
+								//console.log("dialog form data 정리작업")
+							}
+						})
+
 		// 최초 데이터 가지고오기
 		fetch();
 	});
@@ -225,10 +236,8 @@
 				<p class="validateTips error" style="display: none">비밀번호가 틀립니다.</p>
 				<form>
 					<input type="password" id="password-delete" value=""
-						class="text ui-widget-content ui-corner-all">
-					<input
-						type="hidden" id="hidden-no" value=""> 
-					<input
+						class="text ui-widget-content ui-corner-all"> <input
+						type="hidden" id="hidden-no" value=""> <input
 						type="submit" tabindex="-1"
 						style="position: absolute; top: -1000px">
 				</form>
